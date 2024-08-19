@@ -1,14 +1,14 @@
-import { GetContratoByPersonaUseCase } from "../../application/GetContratoByPersonaUseCase";
+import { GetContratoByEnlaceUseCase } from "../../application/GetContratoByEnlaceUseCase";
 import { Request, Response } from "express";
 
-export class GetContratoByPersonaController {
-    constructor(private getContratoByPersonaIdUseCase: GetContratoByPersonaUseCase) {}
+export class GetContratoByEnlaceController {
+    constructor(private getContratoByEnlaceUseCase: GetContratoByEnlaceUseCase) {}
 
     async run(req: Request, res: Response){
         const personaId: string = req.params.personaId;
 
         try {
-            const contrato = await this.getContratoByPersonaIdUseCase.run(personaId);
+            const contrato = await this.getContratoByEnlaceUseCase.run(personaId);
             res.status(200).json({
                 msg: 'Contrato encontrado',
                 contrato: contrato
