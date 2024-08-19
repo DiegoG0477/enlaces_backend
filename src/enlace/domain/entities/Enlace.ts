@@ -1,4 +1,4 @@
-export class Persona{
+export class Enlace{
     constructor(
         readonly nombre: string,
         readonly apellidoP: string,

@@ -9,9 +9,22 @@ export class MysqlContratoRepository implements ContratoRepository {
     async addContrato(contrato: Contrato): Promise<Contrato | null> {
         try{
             const queryStr: string = 'CALL addContrato(?, ?, ?, ?. ?, ?, ?, ?)';
-            const values: any[] = [contrato.personaId, contrato.estatus, contrato.descripcion, contrato.fechaContrato, contrato.userId, contrato.versionContratoId, contrato.ubicacion, contrato.tipoContratoId];
+            const values: any[] = [
+                contrato.enlaceId, 
+                contrato.estatus, 
+                contrato.descripcion, 
+                contrato.fechaContrato, 
+                contrato.userId, 
+                contrato.versionContratoId, 
+                contrato.ubicacion, 
+                contrato.tipoContratoId
+            ];
 
             const [result]: any = await query(queryStr, values);
+
+            if(result.affectedRows === 0){
+                return null;
+            }
 
             const newContrato: Contrato = new Contrato(
                 result[0].persona_id, 
@@ -40,6 +53,10 @@ export class MysqlContratoRepository implements ContratoRepository {
 
             const [result]: any = await query(queryStr, values);
 
+            if (result.length === 0){
+                return null;
+            }
+
             const contrato: Contrato = new Contrato(
                 result[0].persona_id, 
                 result[0].estatus, 
@@ -65,6 +82,10 @@ export class MysqlContratoRepository implements ContratoRepository {
             const queryStr: string = 'CALL getContratos()';
 
             const [result]: any = await query(queryStr, []);
+
+            if (result.length === 0){
+                return null;
+            }
 
             const contratos: Contrato[] = result.map((contrato: any) => new Contrato(
                 contrato.persona_id, 

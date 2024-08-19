@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 export class AddContratoController {
     constructor(private addContratoUseCase: AddContratoUseCase) {}
- 
+
     async run(req: Request, res: Response){
         const request = req.body;
 
@@ -21,6 +21,14 @@ export class AddContratoController {
 
         try {
             const contratoAdded = await this.addContratoUseCase.run(contrato);
+
+            if (!contratoAdded) {
+                res.status(404).json({
+                    msg: 'Error al agregar contrato, verifique los datos'
+                });
+                return;
+            }
+
             res.status(201).json({
                 msg: 'Contrato agregado correctamente',
                 contrato: contratoAdded

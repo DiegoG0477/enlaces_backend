@@ -1,6 +1,6 @@
 export class Contrato {
     constructor(
-        readonly personaId: string,
+        readonly enlaceId: string,
         readonly estatus: number,
         readonly descripcion: string,
         readonly fechaContrato: Date,

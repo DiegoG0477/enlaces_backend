@@ -7,6 +7,14 @@ export class GetContratosController {
     async run(req: Request, res: Response){
         try {
             const contratos = await this.getContratosUseCase.run();
+
+            if(!contratos){
+                res.status(404).json({
+                    msg: 'No se encontraron contratos'
+                });
+                return;
+            }
+
             res.status(200).json({
                 msg: 'Contratos encontrados',
                 contratos: contratos
