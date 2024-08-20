@@ -1,4 +1,4 @@
-import { Enlace } from "./entities/Enlace";
+import { Enlace } from "../entities/Enlace";
 
 export interface EnlaceRepository {
     addEnlace(Enlace: Enlace): Promise<Enlace|null>;

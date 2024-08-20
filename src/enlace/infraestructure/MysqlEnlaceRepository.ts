@@ -1,6 +1,6 @@
-import { EnlaceRepository } from "../domain/EnlaceRepository";
+import { EnlaceRepository } from "../domain/repositories/EnlaceRepository";
 import { Enlace } from "../domain/entities/Enlace";
-import { query } from "../../database/MysqlAdapter";
+import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlEnlaceRepository'});

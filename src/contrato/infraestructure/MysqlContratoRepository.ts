@@ -1,6 +1,6 @@
 import { ContratoRepository } from "../domain/ContratoRepository";
 import { Contrato } from "../domain/Contrato";
-import { query } from "../../database/MysqlAdapter";
+import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlContratoRepository'});
