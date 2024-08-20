@@ -1,4 +1,4 @@
-import { Contrato } from "../../domain/Contrato";
+import { Contrato } from "../../domain/entities/Contrato";
 import { AddContratoUseCase } from "../../application/AddContratoUseCase";
 import { Request, Response } from "express";
 

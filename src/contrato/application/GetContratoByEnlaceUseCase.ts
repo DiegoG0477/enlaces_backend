@@ -1,5 +1,5 @@
-import { Contrato } from "../domain/Contrato";
-import { ContratoRepository } from "../domain/ContratoRepository";
+import { Contrato } from "../domain/entities/Contrato";
+import { ContratoRepository } from "../domain/repositories/ContratoRepository";
 
 export class GetContratoByEnlaceUseCase {
     constructor(private contratoRepository: ContratoRepository) {}
