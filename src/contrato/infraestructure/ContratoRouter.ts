@@ -14,11 +14,9 @@ import {
 
 const contratoRouter = express.Router();
 
-//prefijo tipo -> /contrato (en realidad deberia ser "/contratos")
-contratoRouter.post('/createContrato', (req, res) => addContratoController.run(req, res));
+contratoRouter.post('/', (req, res) => addContratoController.run(req, res));
 contratoRouter.get('/', (req, res) => getContratosController.run(req, res));
-//deberia ser "/:personaId"
-contratoRouter.get('/byId/:personaId', (req, res) => getContratoByEnlaceController.run(req, res));
+contratoRouter.get('/enlaces/:enlaceId', (req, res) => getContratoByEnlaceController.run(req, res));
 
 contratoRouter.get('/tipos-instalacion', (req, res) => getAllTipoInstalacionController.run(req, res));
 

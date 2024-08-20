@@ -7,6 +7,6 @@ import {
 const departamentoRouter = express.Router();
 
 departamentoRouter.get('/', (req, res) => getDepartamentosController.run(req, res));
-departamentoRouter.get('/:direccionId', (req, res) => getDepartamentosByDireccionIdController.run(req, res));
+departamentoRouter.get('/direcciones/:direccionId', (req, res) => getDepartamentosByDireccionIdController.run(req, res));
 
 export { departamentoRouter };

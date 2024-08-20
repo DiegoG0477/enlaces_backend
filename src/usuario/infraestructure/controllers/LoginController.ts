@@ -22,6 +22,14 @@ export class LoginController{
             }
 
             const token = this.tokenService.generateToken(validUser);
+
+            res.cookie('token', token, {
+                httpOnly: false,
+                secure: false,
+                path: '/',
+                // sameSite: 'lax',
+                maxAge: 43200000, // 12 hours in milliseconds
+            });
             
             res.status(200).json({
                 msg: 'Inicio de sesión correcto',
