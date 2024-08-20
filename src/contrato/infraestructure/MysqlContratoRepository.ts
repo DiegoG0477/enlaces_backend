@@ -46,10 +46,10 @@ export class MysqlContratoRepository implements ContratoRepository {
         }
     }
 
-    async getContratoByEnlace(personaId: string): Promise<Contrato | null> {
+    async getContratoByEnlace(enlaceId: string): Promise<Contrato | null> {
         try {
             const queryStr: string = 'CALL getContratoByPersonaId(?)';
-            const values: any[] = [personaId];
+            const values: any[] = [enlaceId];
 
             const [result]: any = await query(queryStr, values);
 

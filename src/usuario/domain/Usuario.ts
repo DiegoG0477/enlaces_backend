@@ -24,6 +24,7 @@ export class Usuario {
 
     toDto(): UsuarioDto {
         return new UsuarioDto(
+            this.id ?? 0,
             this.correo,
             this.username
         );

@@ -1,4 +1,4 @@
-import { Enlace } from "../domain/entities/Enlace";
+import { Enlace } from "../domain/Enlace";
 import { EnlaceRepository } from "../domain/EnlaceRepository";
 
 export class GetEnlacesUseCase {

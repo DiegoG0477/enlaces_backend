@@ -12,3 +12,5 @@ contratoRouter.post('/createContrato', (req, res) => addContratoController.run(r
 contratoRouter.get('/', (req, res) => getContratosController.run(req, res));
 //deberia ser "/:personaId"
 contratoRouter.get('/byId/:personaId', (req, res) => getContratoByEnlaceController.run(req, res));
+
+export { contratoRouter };

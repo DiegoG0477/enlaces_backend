@@ -1,5 +1,5 @@
 import { EnlaceRepository } from "../domain/EnlaceRepository";
-import { Enlace } from "../domain/entities/Enlace";
+import { Enlace } from "../domain/Enlace";
 
 export class UpdateEnlaceUseCase {
     constructor(private repository: EnlaceRepository) {}

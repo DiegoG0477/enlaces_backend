@@ -1,5 +1,5 @@
-import { EnlaceRepository } from "../domain/repositories/EnlaceRepository";
-import { Enlace } from "../domain/entities/Enlace";
+import { EnlaceRepository } from "../domain/EnlaceRepository";
+import { Enlace } from "../domain/Enlace";
 import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
 import { Signale } from "signale";
 

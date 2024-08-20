@@ -1,4 +1,4 @@
-import { Enlace } from "../../domain/entities/Enlace";
+import { Enlace } from "../../domain/Enlace";
 import { AddEnlaceUseCase } from "../../application/AddEnlaceUseCase";
 import { Request, Response } from "express";
 

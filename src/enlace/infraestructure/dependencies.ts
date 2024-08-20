@@ -16,12 +16,14 @@ import { MysqlEnlaceRepository } from "./MysqlEnlaceRepository";
 
 const mysqlEnlaceRepository = new MysqlEnlaceRepository();
 
+
 const addEnlaceUseCase = new AddEnlaceUseCase(mysqlEnlaceRepository);
 const getEnlaceByIdUseCase = new GetEnlaceByIdUseCase(mysqlEnlaceRepository);
 const getEnlacesByEstatusUseCase = new GetEnlacesByEstatusUseCase(mysqlEnlaceRepository);
 const getEnlacesUseCase = new GetEnlacesUseCase(mysqlEnlaceRepository);
 const updateEnlaceUseCase = new UpdateEnlaceUseCase(mysqlEnlaceRepository);
 const deleteEnlaceUseCase = new DeleteEnlaceUseCase(mysqlEnlaceRepository);
+
 
 export const addEnlaceController = new AddEnlaceController(addEnlaceUseCase);
 export const getEnlaceByIdController = new GetEnlaceByIdController(getEnlaceByIdUseCase);

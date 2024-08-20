@@ -1,1 +1,0 @@
-//cargo es compartiudo por "Persona" y "Usuario"

@@ -21,5 +21,7 @@ export class ValidateLoginUseCase {
         if (!isPasswordValid) {
             return null;
         }
+
+        return usuario.toDto();
     }
 }

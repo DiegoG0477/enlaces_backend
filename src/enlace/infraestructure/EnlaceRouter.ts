@@ -16,3 +16,5 @@ enlaceRouter.get('/:enlaceId', (req, res) => getEnlaceByIdController.run(req, re
 enlaceRouter.post('/', (req, res) => addEnlaceController.run(req, res));
 enlaceRouter.patch('/:enlaceId', (req, res) => updateEnlaceController.run(req, res));
 enlaceRouter.delete('/:enlaceId', (req, res) => deleteEnlaceController.run(req, res));
+
+export { enlaceRouter };
