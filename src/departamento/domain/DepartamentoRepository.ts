@@ -1,4 +1,4 @@
-import { Departamento } from "../../../departamento/domain/Departamento";
+import { Departamento } from "./Departamento";
 
 export interface DepartamentoRepository {
     getDepartamentos(): Promise<Departamento[] | null>;

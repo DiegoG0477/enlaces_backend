@@ -1,4 +1,4 @@
-import { Direccion } from "../../../direccion/domain/Direccion";
+import { Direccion } from "./Direccion";
 
 export interface DireccionRepository {
     getDirecciones(): Promise<Direccion[] | null>;
