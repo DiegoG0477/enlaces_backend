@@ -29,25 +29,12 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 return null;
             }
 
-            const newEnlace: Enlace = new Enlace(
-                result[0].nombre,
-                result[0].apellidoP,
-                result[0].apellidoM,
-                result[0].correo,
-                result[0].telefono,
-                result[0].estatus,
-                result[0].adscripcion_id,
-                result[0].cargo_id,
-                result[0].auth_user_id,
-                result[0].tipoPersona_id,
-                result[0].direccion_id,
-                result[0].idPersona
-            );
+            enlace.setId(result.insertId);
 
-            return newEnlace;
+            return enlace;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -56,11 +43,11 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             const queryStr: string = 'CALL getEnlaces()';
             const [result]: any = await query(queryStr, []);
 
-            if(result.length === 0){
+            if(result[0].length === 0){
                 return null;
             }
 
-            const enlaces: Enlace[] = result.map((enlace: any) => new Enlace(
+            const enlaces: Enlace[] = result[0].map((enlace: any) => new Enlace(
                 enlace.nombre,
                 enlace.apellidoP,
                 enlace.apellidoM,
@@ -78,7 +65,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             return enlaces;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -89,29 +76,33 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if(result.length === 0){
+            console.log(result);
+
+            if(result[0].length === 0){
                 return null;
             }
 
+            const enlaceSql = result[0][0];
+
             const enlace: Enlace = new Enlace(
-                result[0].nombre,
-                result[0].apellidoP,
-                result[0].apellidoM,
-                result[0].correo,
-                result[0].telefono,
-                result[0].estatus,
-                result[0].adscripcion_id,
-                result[0].cargo_id,
-                result[0].auth_user_id,
-                result[0].tipoPersona_id,
-                result[0].direccion_id,
-                result[0].idPersona
+                enlaceSql.nombre,
+                enlaceSql.apellidoP,
+                enlaceSql.apellidoM,
+                enlaceSql.correo,
+                enlaceSql.telefono,
+                enlaceSql.estatus,
+                enlaceSql.adscripcion_id,
+                enlaceSql.cargo_id,
+                enlaceSql.auth_user_id,
+                enlaceSql.tipoPersona_id,
+                enlaceSql.direccion_id,
+                enlaceSql.idPersona
             );
 
             return enlace;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -122,11 +113,11 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if(result.length === 0){
+            if(result[0].length === 0){
                 return null;
             }
 
-            const enlaces: Enlace[] = result.map((enlace: any) => new Enlace(
+            const enlaces: Enlace[] = result[0].map((enlace: any) => new Enlace(
                 enlace.nombre,
                 enlace.apellidoP,
                 enlace.apellidoM,
@@ -144,7 +135,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             return enlaces;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -169,30 +160,32 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if(result.affectedRows === 0){
+            if(result[0].length === 0){
                 return null;
             }
 
+            const enlaceSql = result[0][0];
+
             const updatedEnlace: Enlace = new Enlace(
-                result[0].nombre,
-                result[0].apellidoP,
-                result[0].apellidoM,
-                result[0].correo,
-                result[0].telefono,
-                result[0].estatus,
-                result[0].adscripcion_id,
-                result[0].cargo_id,
-                result[0].auth_user_id,
-                result[0].tipoPersona_id,
-                result[0].direccion_id,
-                result[0].idPersona
+                enlaceSql.nombre,
+                enlaceSql.apellidoP,
+                enlaceSql.apellidoM,
+                enlaceSql.correo,
+                enlaceSql.telefono,
+                enlaceSql.estatus,
+                enlaceSql.adscripcion_id,
+                enlaceSql.cargo_id,
+                enlaceSql.auth_user_id,
+                enlaceSql.tipoPersona_id,
+                enlaceSql.direccion_id,
+                enlaceSql.idPersona
             );
 
             return updatedEnlace;
 
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -203,6 +196,8 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
+            console.log(result);
+
             if(result.affectedRows === 0){
                 return false;
             }
@@ -210,7 +205,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             return true;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 }

@@ -28,25 +28,15 @@ export class MysqlUsuarioRepository implements UsuarioRepository {
             if (result.affectedRows === 0) {
                 return null;
             }
-    
-            const newUsuario: Usuario = new Usuario(
-                result[0].nombre,
-                result[0].apellidoP,
-                result[0].apellidoM,
-                result[0].correo,
-                result[0].telefono,
-                result[0].cargoAdministrativo,
-                result[0].departamento,
-                result[0].username,
-                result[0].superuser,
-                result[0].password,
-                result[0].idUsuario
-            );
+
+            const newUsuario = usuario;
+
+            newUsuario.setId(result.insertId);
     
             return newUsuario;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -55,28 +45,30 @@ export class MysqlUsuarioRepository implements UsuarioRepository {
             const queryStr = 'CALL getUsuarioByUsername(?)';
             const [result]: any = await query(queryStr, [username]);
 
-            if (result.length === 0) {
+            if (result[0].length === 0) {
                 return null;
             }
 
+            const usuarioSql = result[0][0];
+
             const usuario: Usuario = new Usuario(
-                result[0].nombre,
-                result[0].apellidoP,
-                result[0].apellidoM,
-                result[0].correo,
-                result[0].telefono,
-                result[0].cargoAdministrativo,
-                result[0].departamento,
-                result[0].username,
-                result[0].superuser,
-                result[0].password,
-                result[0].idUsuario
+                usuarioSql.nombre,
+                usuarioSql.apellidoP,
+                usuarioSql.apellidoM,
+                usuarioSql.correo,
+                usuarioSql.telefono,
+                usuarioSql.cargoAdministrativo,
+                usuarioSql.departamento,
+                usuarioSql.username,
+                usuarioSql.superuser,
+                usuarioSql.password,
+                usuarioSql.idUsuario
             );
 
             return usuario;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 }

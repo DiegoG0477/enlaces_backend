@@ -11,7 +11,7 @@ export class Usuario {
         readonly username: string,
         readonly superuser: number,
         private password: string,
-        readonly id?: number
+        private id?: number
     ) {}
 
     setPassword(password: string): void {
@@ -20,6 +20,10 @@ export class Usuario {
 
     getPassword(): string {
         return this.password;
+    }
+
+    setId(id: number): void {
+        this.id = id;
     }
 
     toDto(): UsuarioDto {

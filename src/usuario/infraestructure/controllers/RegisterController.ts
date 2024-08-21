@@ -7,7 +7,20 @@ export class RegisterController {
 
     async run(req: Request, res: Response){
         try {
-            const usuario: Usuario = req.body;
+            const request = req.body;
+
+            const usuario = new Usuario(
+                request.nombre,
+                request.apellidoP,
+                request.apellidoM,
+                request.correo,
+                request.telefono,
+                request.cargoAdministrativo,
+                request.departamento,
+                request.username,
+                request.superuser,
+                request.password
+            );
 
             const usuarioAdded = await this.addUsuarioUseCase.run(usuario);
 

@@ -11,7 +11,7 @@ export class UpdateEnlaceController {
         try {
             const enlace = await this.updateEnlaceUseCase.run(enlaceId, updateData);
 
-            if(!enlace){
+            if(!enlace || enlace === null){
                 res.status(404).json({
                     msg: 'Enlace no actualizado'
                 });

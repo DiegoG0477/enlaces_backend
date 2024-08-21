@@ -1,5 +1,5 @@
 import { AddContratoUseCase } from "../application/AddContratoUseCase";
-import { GetContratoByEnlaceUseCase } from "../application/GetContratoByEnlaceUseCase";
+import { GetContratosByEnlaceUseCase } from "../application/GetContratosByEnlaceUseCase";
 import { GetContratosUseCase } from "../application/GetContratosUseCase";
 
 import { GetAllTipoInstalacionUseCase } from "../application/GetAllTipoInstalacionUseCase";
@@ -12,7 +12,7 @@ import { GetVersionesByTipoContratoIdUseCase } from "../application/GetVersiones
 import { ContratoRepository } from "../domain/repositories/ContratoRepository";
 
 import { AddContratoController } from "./controllers/AddContratoController";
-import { GetContratoByEnlaceController } from "./controllers/GetContratoByEnlaceController";
+import { GetContratosByEnlaceController } from "./controllers/GetContratosByEnlaceController";
 import { GetContratosController } from "./controllers/GetContratosController";
 
 import { GetAllTipoInstalacionController } from "./controllers/GetAllTipoInstalacionController";
@@ -27,11 +27,11 @@ import { MysqlContratoRepository} from "./adapters/MysqlContratoRepository";
 const mysqlContratoRepository: ContratoRepository = new MysqlContratoRepository();
 
 const addContratoUseCase = new AddContratoUseCase(mysqlContratoRepository);
-const getContratoByEnlaceUseCase = new GetContratoByEnlaceUseCase(mysqlContratoRepository);
+const getContratoByEnlaceUseCase = new GetContratosByEnlaceUseCase(mysqlContratoRepository);
 const getContratosUseCase = new GetContratosUseCase(mysqlContratoRepository);
 
 export const addContratoController = new AddContratoController(addContratoUseCase);
-export const getContratoByEnlaceController = new GetContratoByEnlaceController(getContratoByEnlaceUseCase);
+export const getContratoByEnlaceController = new GetContratosByEnlaceController(getContratoByEnlaceUseCase);
 export const getContratosController = new GetContratosController(getContratosUseCase);
 
 const getAllTipoInstalacionUseCase = new GetAllTipoInstalacionUseCase(mysqlContratoRepository);

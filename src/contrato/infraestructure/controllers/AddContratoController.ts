@@ -8,11 +8,13 @@ export class AddContratoController {
     async run(req: Request, res: Response){
         const request = req.body;
 
+        const fechaContrato = new Date();
+
         const contrato = new Contrato(
             request.persona_id as string,
             request.estatus as number,
             request.descripcion as string,
-            request.fechaContrato as Date,
+            fechaContrato,
             request.id_user as number,
             request.id_versionContrato as number,
             request.ubicacion as number,

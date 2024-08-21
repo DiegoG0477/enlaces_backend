@@ -11,11 +11,11 @@ export class MysqlDependenciaRepository implements DependenciaRepository {
             const queryStr: string = 'CALL getDependencias()';
             const [result]: any = await query(queryStr, []);
 
-            if(result.length === 0){
+            if(result[0].length === 0){
                 return null;
             }
 
-            const dependencias: Dependencia[] = result.map((dependencia: any) => new Dependencia(
+            const dependencias: Dependencia[] = result[0].map((dependencia: any) => new Dependencia(
                 dependencia.idDependencia,
                 dependencia.nombreDependencia,
                 dependencia.nombreCorto,
@@ -37,7 +37,7 @@ export class MysqlDependenciaRepository implements DependenciaRepository {
             return dependencias;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 }

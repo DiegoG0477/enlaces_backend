@@ -11,11 +11,11 @@ export class MysqlCargoRepository implements CargoRepository{
             const queryStr: string = 'CALL getCargos()';
             const [result]: any = await query(queryStr, []);
 
-            if(result.length === 0){
+            if(result[0].length === 0){
                 return null;
             }
-
-            const cargos: Cargo[] = result.map((cargo: any) => new Cargo(
+            
+            const cargos: Cargo[] = result[0].map((cargo: any) => new Cargo(
                 cargo.idCargo,
                 cargo.nombreCargo
             ));
@@ -23,7 +23,7 @@ export class MysqlCargoRepository implements CargoRepository{
             return cargos;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 }

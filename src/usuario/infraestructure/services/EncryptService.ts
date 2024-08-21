@@ -18,17 +18,18 @@ export class EncryptService implements IEncryptService {
             return pass;
         } catch (error: any) {
             signale.error('Error at encrypt:', error);
-            return error;
+            throw error;
         }
     }
 
     async compare(data: string, hashedData: string): Promise<boolean> {
         try{
+            console.log(data, " ", hashedData);
             const result = bcrypt.compareSync(data, hashedData);
             return result;
         } catch (error: any) {
             signale.error('Error at compare:', error);
-            return error;
+            throw error;
         }
     }
 }

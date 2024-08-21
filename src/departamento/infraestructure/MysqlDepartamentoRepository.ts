@@ -11,11 +11,11 @@ export class MysqlDepartamentoRepository implements DepartamentoRepository {
             const queryStr: string = 'CALL getDepartamentos()';
             const [result]: any = await query(queryStr, []);
 
-            if(result.length === 0){
+            if(result[0].length === 0){
                 return null;
             }
 
-            const departamentos: Departamento[] = result.map((departamento: any) => new Departamento(
+            const departamentos: Departamento[] = result[0].map((departamento: any) => new Departamento(
                 departamento.idDepartamento,
                 departamento.nombreDepartamento,
                 departamento.id_direccion
@@ -24,7 +24,7 @@ export class MysqlDepartamentoRepository implements DepartamentoRepository {
             return departamentos;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 
@@ -34,11 +34,11 @@ export class MysqlDepartamentoRepository implements DepartamentoRepository {
             const values: any[] = [direccionId];
             const [result]: any = await query(queryStr, values);
 
-            if(result.length === 0){
+            if(result[0].length === 0){
                 return null;
             }
 
-            const departamentos: Departamento[] = result.map((departamento: any) => new Departamento(
+            const departamentos: Departamento[] = result[0].map((departamento: any) => new Departamento(
                 departamento.idDepartamento,
                 departamento.nombreDepartamento,
                 departamento.id_direccion
@@ -47,7 +47,7 @@ export class MysqlDepartamentoRepository implements DepartamentoRepository {
             return departamentos;
         } catch (error: any) {
             signale.error(error);
-            return error;
+            throw error;
         }
     }
 }

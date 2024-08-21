@@ -21,7 +21,7 @@ export class LoginController{
                 return;
             }
 
-            const token = this.tokenService.generateToken(validUser);
+            const token = await this.tokenService.generateToken(validUser);
 
             res.cookie('token', token, {
                 httpOnly: false,

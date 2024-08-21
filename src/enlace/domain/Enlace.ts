@@ -11,6 +11,14 @@ export class Enlace{
         readonly userId: number,
         readonly tipoPersonaId: number,
         readonly direccionId: number,
-        readonly id?: string,
+        private id?: string,
     ){}
+
+    getId(): string{
+        return this.id ?? '';
+    }
+
+    setId(id: string){
+        this.id = id;
+    }
 }

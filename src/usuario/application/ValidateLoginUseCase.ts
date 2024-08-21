@@ -16,6 +16,10 @@ export class ValidateLoginUseCase {
 
         const hashedPassword = usuario.getPassword();
 
+        if (!hashedPassword) {
+            throw new Error("User's password from database is required");
+        }
+
         const isPasswordValid = await this.encryptService.compare(password, hashedPassword);
 
         if (!isPasswordValid) {

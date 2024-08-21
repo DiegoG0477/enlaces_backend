@@ -25,6 +25,6 @@ export async function query(sql: string, params: any[]) {
     return result;
   } catch (error: any) {
     signale.error(error);
-    return error;
+    throw error;
   }
 }
