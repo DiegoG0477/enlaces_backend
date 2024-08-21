@@ -31,7 +31,7 @@ export class MysqlDireccionRepository implements DireccionRepository {
 
     async getDireccionesByDependencia(dependenciaId: number): Promise<Direccion[] | null> {
         try {
-            const queryStr: string = 'CALL getDireccionesByDependencia(?)';
+            const queryStr: string = 'CALL getDireccionesByDependenciaId(?)';
             const values: any[] = [dependenciaId];
             const [result]: any = await query(queryStr, values);
 
