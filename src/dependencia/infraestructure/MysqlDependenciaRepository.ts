@@ -1,6 +1,6 @@
 import { Dependencia } from "../domain/Dependencia";
 import { DependenciaRepository } from "../domain/DependenciaRepository";
-import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
+import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlDependenciaRepository'});

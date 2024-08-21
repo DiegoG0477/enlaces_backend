@@ -1,6 +1,6 @@
 import { UsuarioRepository } from "../domain/UsuarioRepository";
 import { Usuario } from "../domain/Usuario";
-import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
+import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({ scope: 'MysqlUsuarioRepository' });

@@ -3,7 +3,7 @@ import { Contrato } from "../../domain/entities/Contrato";
 import { TipoContrato } from "../../domain/entities/TipoContrato";
 import { TipoInstalacion } from "../../domain/entities/TipoInstalacion";
 import { VersionContrato } from "../../domain/entities/VersionContrato";
-import { query } from "../../../shared/infraestructure/adapters/MysqlAdapter";
+import { query } from "../../../database/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlContratoRepository'});

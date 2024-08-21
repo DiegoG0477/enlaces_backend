@@ -1,6 +1,6 @@
 import { DireccionRepository } from "../domain/DireccionRepository";
 import { Direccion } from "../domain/Direccion";
-import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
+import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlDireccionRepository'});

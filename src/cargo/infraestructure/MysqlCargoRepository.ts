@@ -1,6 +1,6 @@
 import { Cargo } from "../domain/Cargo";
 import { CargoRepository } from "../domain/CargoRepository";
-import { query } from "../../shared/infraestructure/adapters/MysqlAdapter";
+import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlCargoRepository'});
