@@ -50,4 +50,31 @@ export class MysqlDepartamentoRepository implements DepartamentoRepository {
             throw error;
         }
     }
+
+    async getDepartamentoById(departamentoId: string): Promise<Departamento | null> {
+        try{
+            const queryStr: string = 'CALL getDepartamentoById(?)';
+            const values: any = [departamentoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].lenght === 0){
+                return null;
+            }
+
+            const departamentoSql = result[0][0];
+
+            const departamento: Departamento = new Departamento(
+                departamentoSql.idDepartamento,
+                departamentoSql.nombreDepartamento,
+                departamentoSql.id_direccion
+            )
+
+            return departamento;
+
+        }catch(error:any){
+            signale.error(error);
+            throw error;
+        }
+    }
 }

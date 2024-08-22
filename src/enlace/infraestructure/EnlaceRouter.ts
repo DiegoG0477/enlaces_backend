@@ -4,6 +4,7 @@ import {
     getEnlaceByIdController,
     getEnlacesByEstatusController,
     getEnlacesController,
+    getAllEnlaceDetalladoController,
     updateEnlaceController,
     deleteEnlaceController
 } from './dependencies';
@@ -11,6 +12,7 @@ import {
 const enlaceRouter = express.Router();
 
 enlaceRouter.get('/', (req, res) => getEnlacesController.run(req, res));
+enlaceRouter.get('/detallados', (req, res) => getAllEnlaceDetalladoController.run(req, res));
 enlaceRouter.get('/estatus/:estatusId', (req, res) => getEnlacesByEstatusController.run(req, res));
 enlaceRouter.get('/:enlaceId', (req, res) => getEnlaceByIdController.run(req, res));
 enlaceRouter.post('/', (req, res) => addEnlaceController.run(req, res));

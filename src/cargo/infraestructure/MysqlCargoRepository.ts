@@ -26,4 +26,29 @@ export class MysqlCargoRepository implements CargoRepository{
             throw error;
         }
     }
+
+    async getCargoById(cargoId: string): Promise<Cargo | null> {
+        try{
+            const queryStr: string = 'CALL getCargoById(?)';
+            const [result]: any = await query(queryStr, []);
+
+            if(result[0].lenght === 0){
+                return null;
+            }
+
+            const cargoSql = result[0][0];
+
+            const cargo: Cargo = new Cargo(
+                cargoSql.idCargo,
+                cargoSql.nombreCargo
+            )
+
+            return cargo;
+
+        } catch(error: any){
+            signale.error(error);
+            throw error;
+        }
+
+    }
 }

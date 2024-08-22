@@ -52,4 +52,32 @@ export class MysqlDireccionRepository implements DireccionRepository {
             throw error;
         }
     }
+
+    async getDireccionById(direccionId: string): Promise<Direccion | null> {
+        try{
+            const queryStr: string = 'CALL getDireccionById(?)';
+            const values: any = [direccionId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const direccionSql = result[0][0];
+
+            const direccion: Direccion = new Direccion(
+                direccionSql.idDireccion,
+                direccionSql.nombre,
+                direccionSql.dependencia_id,
+                direccionSql.idPadre_id
+            )
+
+            return direccion;
+
+        } catch(error: any){
+            signale.error(error);
+            throw error;
+        }
+    }
 }

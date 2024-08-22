@@ -1,5 +1,6 @@
 import { EnlaceRepository } from "../domain/EnlaceRepository";
 import { Enlace } from "../domain/Enlace";
+import { EnlaceDto } from "../domain/EnlaceDto";
 import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 
@@ -130,6 +131,36 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.tipoPersona_id,
                 enlace.direccion_id,
                 enlace.idPersona
+            ));
+
+            return enlaces;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllEnlaceDetallado(): Promise<any[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllEnlaceDetallado()';
+            const [result]: any = await query(queryStr, []);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaces: EnlaceDto[] = result[0].map((enlace: any) => new EnlaceDto(
+                enlace.id,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.dependencia,
+                enlace.cargo,
+                enlace.direccion,
+                enlace.adscripcion
             ));
 
             return enlaces;

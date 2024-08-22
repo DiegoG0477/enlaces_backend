@@ -40,4 +40,44 @@ export class MysqlDependenciaRepository implements DependenciaRepository {
             throw error;
         }
     }
+
+    async getDependenciaByDireccionId(direccionId: string): Promise<Dependencia|null>{
+        try{
+            const queryStr: string = "CALL getDependenciaByDireccionId(?)";
+            const values = [direccionId]
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const dependenciaSql = result[0][0];
+
+            const dependencia: Dependencia = new Dependencia(
+                dependenciaSql.idDependencia,
+                dependenciaSql.nombreDependencia,
+                dependenciaSql.nombreCorto,
+                dependenciaSql.ubicacionDependencia,
+                dependenciaSql.codigoPostal,
+                dependenciaSql.colonia,
+                dependenciaSql.conmutador,
+                dependenciaSql.correo,
+                dependenciaSql.domicilio,
+                dependenciaSql.fax,
+                dependenciaSql.idDependenciatxt,
+                dependenciaSql.idMunicipio,
+                dependenciaSql.idSector,
+                dependenciaSql.telefonoDirecto,
+                dependenciaSql.tipoOrgano,
+                dependenciaSql.web
+            );
+
+            return dependencia;
+
+        }catch(error: any){
+            signale.error(error);
+            throw error;
+        }
+    }
 }
