@@ -17,7 +17,7 @@ export class GetAllEnlaceDetalladoController {
 
             res.status(200).json({
                 msg: 'Enlaces encontrados',
-                enlace: allContratoDetallado
+                contratos: allContratoDetallado
             });
         } catch (error: any) {
             res.status(404).json({
