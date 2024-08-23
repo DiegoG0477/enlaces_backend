@@ -127,10 +127,10 @@ export class MysqlContratoRepository implements ContratoRepository {
             const contratoDtos: ContratoDto[] = result[0].map((contrato: any) => {
                 return new ContratoDto(
                     contrato.id,
-                    contrato.enlaceId,
                     contrato.nombreEnlace,
                     contrato.apellidoPEnlace,
                     contrato.apellidoMEnlace,
+                    contrato.enlaceId,
                     contrato.estatus,
                     contrato.descripcion,
                     contrato.fechaContrato,
@@ -161,12 +161,13 @@ export class MysqlContratoRepository implements ContratoRepository {
 
             const contratoSql = result[0][0];
 
+
             const contrato: ContratoDto = new ContratoDto(
                 contratoSql.id,
-                contratoSql.enlaceId,
                 contratoSql.nombreEnlace,
                 contratoSql.apellidoPEnlace,
                 contratoSql.apellidoMEnlace,
+                contratoSql.enlaceId,
                 contratoSql.estatus,
                 contratoSql.descripcion,
                 contratoSql.fechaContrato,
@@ -197,10 +198,10 @@ export class MysqlContratoRepository implements ContratoRepository {
             const contratoDtos: ContratoDto[] = result[0].map((contrato: any) => {
                 return new ContratoDto(
                     contrato.id,
-                    contrato.enlaceId,
                     contrato.nombreEnlace,
                     contrato.apellidoPEnlace,
                     contrato.apellidoMEnlace,
+                    contrato.enlaceId,
                     contrato.estatus,
                     contrato.descripcion,
                     contrato.fechaContrato,
