@@ -23,4 +23,8 @@ export interface ContratoRepository {
     getAllVersionContrato():Promise<VersionContrato[]|null>;
 
     getVersionesByTipoContratoId(tipoContratoId:string):Promise<VersionContrato[]|null>;
+
+    updateContrato(contratoId:string, updateData:any):Promise<Contrato|null>;
+
+    deleteContrato(contratoId:string):Promise<boolean>;
 }

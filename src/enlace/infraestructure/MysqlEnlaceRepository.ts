@@ -78,8 +78,6 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            console.log(result);
-
             if(result[0].length === 0){
                 return null;
             }
@@ -220,16 +218,16 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             const values: any = [
                 enlaceId,
                 updateData.nombre ?? null,
-                updateData.apellidoP ?? null,
-                updateData.apellidoM ?? null,
+                updateData.apellidoPaterno ?? null,
+                updateData.apellidoMaterno ?? null,
                 updateData.correo ?? null,
                 updateData.telefono ?? null,
-                updateData.estatus ?? null,
-                updateData.adscripcion_id ?? null,
-                updateData.cargo_id ?? null,
-                updateData.auth_user_id ?? null,
-                updateData.tipoPersona_id ?? null,
-                updateData.direccion_id ?? null,
+                updateData.estatus ?? null, //de momento no se actualiza, mas que en el delete
+                updateData.adscripcion ?? null,
+                updateData.cargo ?? null,
+                updateData.auth_user_id ?? null, //de momento no se actualiza
+                updateData.tipoPersona_id ?? null, //de momento no se actualiza
+                updateData.direccion ?? null,
             ];
 
             const [result]: any = await query(queryStr, values);

@@ -6,6 +6,8 @@ import {
     getAllContratoDetalladoController,
     getContratoDetalladoByIdController,
     getAllContratoDetalladoByEnlaceController,
+    deleteContratoController,
+    updateContratoController,
     //from TIpoInstalacion
     getAllTipoInstalacionController,
     //from TipoContrato
@@ -17,6 +19,8 @@ import {
 
 const contratoRouter = express.Router();
 
+contratoRouter.delete('/:contratoId', (req, res) => deleteContratoController.run(req, res));
+contratoRouter.patch('/:contratoId', (req, res) => updateContratoController.run(req, res));
 contratoRouter.post('/', (req, res) => addContratoController.run(req, res));
 contratoRouter.get('/', (req, res) => getContratosController.run(req, res));
 contratoRouter.get('/detallados', (req, res) => getAllContratoDetalladoController.run(req, res));

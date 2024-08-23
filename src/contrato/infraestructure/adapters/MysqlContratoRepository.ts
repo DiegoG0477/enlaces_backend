@@ -323,4 +323,61 @@ export class MysqlContratoRepository implements ContratoRepository {
             throw error;
         }
     }
+
+    async updateContrato(contratoId: string, updateData: any): Promise<Contrato | null> {
+        try{
+            const queryStr: string = 'CALL updateContrato(?, ?, ?, ?, ?, ?, ?, ?)';
+
+            const values: any[] = [
+                contratoId ?? null,
+                updateData.estatus ?? null,
+                updateData.descripcion ?? null,
+                updateData.fechaContrato ?? null,
+                updateData.userId ?? null,
+                updateData.versionContratoId ?? null,
+                updateData.ubicacion ?? null,
+                updateData.tipoContratoId ?? null
+            ];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: Contrato = new Contrato(
+                contratoSql.persona_id,
+                contratoSql.estatus,
+                contratoSql.descripcion, 
+                contratoSql.fechaContrato, 
+                contratoSql.id_user,
+                contratoSql.id_versionContrato, 
+                contratoSql.ubicacion,
+                contratoSql.id_tipoContrato, 
+                contratoSql.idContrato
+            );
+
+            return contrato;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async deleteContrato(contratoId: string): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL deleteContrato(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
 }

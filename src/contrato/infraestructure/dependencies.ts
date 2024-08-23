@@ -4,6 +4,8 @@ import { GetContratosUseCase } from "../application/GetContratosUseCase";
 import { GetAllContratoDetalladoUseCase } from "../application/GetAllContratoDetalladoUseCase";
 import { GetAllContratoDetalladoByEnlaceUseCase } from "../application/GetAllContratoDetalladoByEnlaceUseCase";
 import { GetContratoDetalladoByIdUseCase } from "../application/GetContratoDetalladoByIdUseCase";
+import { UpdateContratoUseCase } from "../application/UpdateContratoUseCase";
+import { DeleteContratoUseCase } from "../application/DeleteContratoUseCase";
 
 import { GetAllTipoInstalacionUseCase } from "../application/GetAllTipoInstalacionUseCase";
 
@@ -22,6 +24,8 @@ import { GetContratosController } from "./controllers/GetContratosController";
 import { GetAllEnlaceDetalladoController } from "./controllers/GetAllContratoDetalladoController";
 import { GetAllContratoDetalladoByEnlaceController } from "./controllers/GetAllContratoDetalladoByEnlaceController";
 import { GetContratoDetalladoByIdController } from "./controllers/GetContratoDetalladoByIdController";
+import { UpdateContratoController } from "./controllers/UpdateContratoController";
+import { DeleteContratoController } from "./controllers/DeleteContratoController";
 
 import { GetAllTipoInstalacionController } from "./controllers/GetAllTipoInstalacionController";
 
@@ -40,6 +44,8 @@ const getContratosUseCase = new GetContratosUseCase(mysqlContratoRepository);
 const getAllContratoDetalladoUseCase = new GetAllContratoDetalladoUseCase(mysqlContratoRepository);
 const getAllContratoDetalladoByEnlaceUseCase = new GetAllContratoDetalladoByEnlaceUseCase(mysqlContratoRepository);
 const getContratoDetalladoByIdUseCase = new GetContratoDetalladoByIdUseCase(mysqlContratoRepository);
+const updateContratoUseCase = new UpdateContratoUseCase(mysqlContratoRepository);
+const deleteContratoUseCase = new DeleteContratoUseCase(mysqlContratoRepository);
 
 export const addContratoController = new AddContratoController(addContratoUseCase);
 export const getContratoByEnlaceController = new GetContratosByEnlaceController(getContratoByEnlaceUseCase);
@@ -47,6 +53,8 @@ export const getContratosController = new GetContratosController(getContratosUse
 export const getAllContratoDetalladoController = new GetAllEnlaceDetalladoController(getAllContratoDetalladoUseCase);
 export const getAllContratoDetalladoByEnlaceController = new GetAllContratoDetalladoByEnlaceController(getAllContratoDetalladoByEnlaceUseCase);
 export const getContratoDetalladoByIdController = new GetContratoDetalladoByIdController(getContratoDetalladoByIdUseCase);
+export const updateContratoController = new UpdateContratoController(updateContratoUseCase);
+export const deleteContratoController = new DeleteContratoController(deleteContratoUseCase);
 
 const getAllTipoInstalacionUseCase = new GetAllTipoInstalacionUseCase(mysqlContratoRepository);
 

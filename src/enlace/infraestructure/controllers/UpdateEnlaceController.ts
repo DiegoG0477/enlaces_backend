@@ -13,7 +13,7 @@ export class UpdateEnlaceController {
 
             if(!enlace || enlace === null){
                 res.status(404).json({
-                    msg: 'Enlace no actualizado'
+                    msg: 'Enlace no actualizado o no encontrado'
                 });
                 return;
             }
