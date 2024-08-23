@@ -17,6 +17,8 @@ dotenv.config();
 
 const PORT = process.env.PORT ?? 3000;
 
+const CLIENT_HOST = process.env.CLIENT_HOST ?? "http://localhost:3000";
+
 const app = express();
 
 const signale = new Signale();
@@ -24,8 +26,9 @@ const signale = new Signale();
 const allowedOrigins = [
     'http://localhost:3001', 
     'http://localhost:5173', 
-    'http://localhost:5174',
-    'http://localhost:3000'
+    'http://localhost:5176',
+    'http://localhost:3003',
+    CLIENT_HOST
 ];
 
 app.use(cors({
