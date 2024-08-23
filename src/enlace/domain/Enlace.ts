@@ -6,6 +6,7 @@ export class Enlace{
         readonly correo: string,
         readonly telefono: string,
         readonly estatus: number,
+        // hace referencia a la tabla de departamentos (departamentoId)
         readonly adscripcionId: number,
         readonly cargoId: number,
         readonly userId: number,

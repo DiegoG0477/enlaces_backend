@@ -3,6 +3,7 @@ import { Enlace } from "../domain/Enlace";
 import { EnlaceDto } from "../domain/EnlaceDto";
 import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
+import { EnlaceCompletoDto } from "../domain/EnlaceCompletoDto";
 
 const signale = new Signale({scope: 'MysqlEnlaceRepository'});
 
@@ -101,6 +102,48 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             );
 
             return enlace;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getEnlaceCompletoById(enlaceId: string): Promise<EnlaceCompletoDto | null> {
+        try {
+            const queryStr: string = 'CALL getEnlaceCompletoById(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaceSql = result[0][0];
+
+            console.log(enlaceSql);
+
+            const enlaceCompleto: EnlaceCompletoDto = new EnlaceCompletoDto(
+                enlaceSql.dependenciaId,
+                enlaceSql.cargoId,
+                enlaceSql.direccionId,
+                enlaceSql.adscripcionId,
+                enlaceSql.tipoPersonaId,
+                enlaceSql.userId,
+                enlaceSql.id,
+                enlaceSql.nombre,
+                enlaceSql.apellidoP,
+                enlaceSql.apellidoM,
+                enlaceSql.correo,
+                enlaceSql.telefono,
+                enlaceSql.estatus,
+                enlaceSql.dependencia,
+                enlaceSql.cargo,
+                enlaceSql.direccion,
+                enlaceSql.adscripcion
+            );
+
+            return enlaceCompleto;
         } catch (error: any) {
             signale.error(error);
             throw error;

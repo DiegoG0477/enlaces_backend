@@ -1,5 +1,6 @@
 import { Contrato } from "../entities/Contrato";
 import { IctiTipos } from "../../../shared/domain/interfaces/IctiTipos";
+import { ContratoDto } from "../entities/ContratoDto";
 import { VersionContrato } from "../entities/VersionContrato";
 
 export interface ContratoRepository {
@@ -8,6 +9,12 @@ export interface ContratoRepository {
     getContratosByEnlace(enlaceId:string):Promise<Contrato[]|null>;
 
     getContratos():Promise<Contrato[]|null>;
+
+    getAllContratoDetallado():Promise<ContratoDto[]|null>;
+
+    getContratoDetalladoById(contratoId:string):Promise<ContratoDto|null>;
+    
+    getAllContratoDetalladoByEnlace(enlaceId:string):Promise<ContratoDto[]|null>;
 
     getAllTipoInstalacion():Promise<IctiTipos[]|null>;
 

@@ -3,6 +3,7 @@ import { Contrato } from "../../domain/entities/Contrato";
 import { TipoContrato } from "../../domain/entities/TipoContrato";
 import { TipoInstalacion } from "../../domain/entities/TipoInstalacion";
 import { VersionContrato } from "../../domain/entities/VersionContrato";
+import { ContratoDto } from "../../domain/entities/ContratoDto";
 import { query } from "../../../database/MysqlAdapter";
 import { Signale } from "signale";
 
@@ -107,6 +108,109 @@ export class MysqlContratoRepository implements ContratoRepository {
             ));
 
             return contratos;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllContratoDetallado(): Promise<any[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllContratoDetallado()';
+            const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoDtos: ContratoDto[] = result[0].map((contrato: any) => {
+                return new ContratoDto(
+                    contrato.id,
+                    contrato.enlaceId,
+                    contrato.nombreEnlace,
+                    contrato.apellidoPEnlace,
+                    contrato.apellidoMEnlace,
+                    contrato.estatus,
+                    contrato.descripcion,
+                    contrato.fechaContrato,
+                    contrato.versionContrato,
+                    contrato.ubicacion,
+                    contrato.tipoContrato
+                );
+            });
+
+            return contratoDtos;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getContratoDetalladoById(contratoId: string): Promise<ContratoDto | null> {
+        try {
+            const queryStr: string = 'CALL getContratoDetalladoById(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: ContratoDto = new ContratoDto(
+                contratoSql.id,
+                contratoSql.enlaceId,
+                contratoSql.nombreEnlace,
+                contratoSql.apellidoPEnlace,
+                contratoSql.apellidoMEnlace,
+                contratoSql.estatus,
+                contratoSql.descripcion,
+                contratoSql.fechaContrato,
+                contratoSql.versionContrato,
+                contratoSql.ubicacion,
+                contratoSql.tipoContrato
+            );
+
+            return contrato;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllContratoDetalladoByEnlace(enlaceId: string): Promise<ContratoDto[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllContratoDetalladoByPersonaId(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoDtos: ContratoDto[] = result[0].map((contrato: any) => {
+                return new ContratoDto(
+                    contrato.id,
+                    contrato.enlaceId,
+                    contrato.nombreEnlace,
+                    contrato.apellidoPEnlace,
+                    contrato.apellidoMEnlace,
+                    contrato.estatus,
+                    contrato.descripcion,
+                    contrato.fechaContrato,
+                    contrato.versionContrato,
+                    contrato.ubicacion,
+                    contrato.tipoContrato
+                );
+            });
+
+            return contratoDtos;
 
         } catch (error: any) {
             signale.error(error);
