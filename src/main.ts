@@ -12,6 +12,7 @@ import { dependenciaRouter } from "./dependencia/infraestructure/DependenciaRout
 import { direccionRouter } from "./direccion/infraestructure/DireccionRouter";
 import { enlaceRouter } from "./enlace/infraestructure/EnlaceRouter";
 import { usuarioRouter } from "./usuario/infraestructure/UsuarioRouter";
+import { servicioRouter } from "./servicio/infraestructure/ServicioRouter";
 
 dotenv.config();
 
@@ -72,6 +73,7 @@ app.use("/dependencias", dependenciaRouter);
 app.use("/direcciones", direccionRouter);
 app.use("/enlaces", enlaceRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/servicios", servicioRouter);
 
 app.listen(PORT, async () => {
     signale.success(`Server online on http://localhost:${PORT}/`);

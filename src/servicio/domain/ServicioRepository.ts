@@ -1,5 +1,5 @@
 import { ServicioGetDto } from "./DTOs/ServicioGetDto";
-import { Servicio } from "./Servicio";
+import { Servicio } from "./entities/Servicio";
 
 export interface ServicioRepository {
     addServicio(servicio: Servicio): Promise<Servicio|null>;

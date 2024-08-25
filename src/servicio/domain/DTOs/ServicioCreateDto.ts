@@ -1,4 +1,4 @@
-import { Servicio } from "../Servicio";
+import { Servicio } from "../entities/Servicio";
 
 export class ServicioCreateDto extends Servicio {
     constructor(

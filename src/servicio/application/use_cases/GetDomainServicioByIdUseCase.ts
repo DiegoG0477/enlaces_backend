@@ -1,4 +1,4 @@
-import { Servicio } from "../../domain/Servicio";
+import { Servicio } from "../../domain/entities/Servicio";
 import { ServicioRepository } from "../../domain/ServicioRepository";
 
 export class GetDomainServicioByIdUseCase {

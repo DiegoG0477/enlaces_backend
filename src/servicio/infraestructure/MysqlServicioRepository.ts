@@ -1,5 +1,5 @@
 import { ServicioRepository } from "../domain/ServicioRepository";
-import { Servicio } from "../domain/Servicio";
+import { Servicio } from "../domain/entities/Servicio";
 import { ServicioCreateDto } from "../domain/DTOs/ServicioCreateDto";
 import { ServicioGetDto } from "../domain/DTOs/ServicioGetDto";
 import { ServicioUpdateDto } from "../domain/DTOs/ServicioUpdateDto";
