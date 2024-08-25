@@ -3,16 +3,17 @@ import { Contrato } from "../../domain/entities/Contrato";
 import { TipoContrato } from "../../domain/entities/TipoContrato";
 import { TipoInstalacion } from "../../domain/entities/TipoInstalacion";
 import { VersionContrato } from "../../domain/entities/VersionContrato";
-import { ContratoDto } from "../../domain/entities/ContratoDto";
+import { ContratoDto } from "../../domain/DTOS/ContratoDto";
+import { ContratoCreateDto } from "../../domain/DTOS/ContratoCreateDto";
 import { query } from "../../../database/MysqlAdapter";
 import { Signale } from "signale";
 
 const signale = new Signale({scope: 'MysqlContratoRepository'});
 
 export class MysqlContratoRepository implements ContratoRepository {
-    async addContrato(contrato: Contrato): Promise<Contrato | null> {
+    async addContrato(contrato: ContratoCreateDto): Promise<Contrato | null> {
         try {
-            const queryStr: string = 'CALL addContrato(?, ?, ?, ?, ?, ?, ?, ?)';
+            const queryStr: string = 'CALL addContrato(?, ?, ?, ?, ?, ?, ?, ?, ?)';
             const values: any[] = [
                 contrato.enlaceId, 
                 contrato.estatus, 
@@ -21,7 +22,8 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.createdBy, 
                 contrato.versionContratoId, 
                 contrato.ubicacion, 
-                contrato.tipoContratoId
+                contrato.tipoContratoId,
+                contrato.createdAt
             ];
     
             const [result]: any = await query(queryStr, values);
@@ -34,7 +36,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
             const contratoSql = result[0][0];
     
-            const newContrato: Contrato = new Contrato(
+            const newContrato: Contrato = new ContratoCreateDto(
                 contratoSql.persona_id, 
                 contratoSql.estatus, 
                 contratoSql.descripcion, 
@@ -43,7 +45,8 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contratoSql.id_versionContrato, 
                 contratoSql.ubicacion, 
                 contratoSql.id_tipoContrato, 
-                contratoSql.idContrato
+                contratoSql.idContrato,
+                contratoSql.createdAt
             );
     
             return newContrato;
@@ -327,7 +330,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async updateContrato(contratoId: string, updateData: any): Promise<Contrato | null> {
         try{
-            const queryStr: string = 'CALL updateContrato(?, ?, ?, ?, ?, ?, ?, ?)';
+            const queryStr: string = 'CALL updateContrato(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
             const values: any[] = [
                 contratoId ?? null,
@@ -337,7 +340,9 @@ export class MysqlContratoRepository implements ContratoRepository {
                 updateData.userId ?? null,
                 updateData.versionContratoId ?? null,
                 updateData.ubicacionId ?? null,
-                updateData.tipoContratoId ?? null
+                updateData.tipoContratoId ?? null,
+                updateData.updatedBy,
+                updateData.updatedAt
             ];
 
             const [result]: any = await query(queryStr, values);
@@ -367,10 +372,10 @@ export class MysqlContratoRepository implements ContratoRepository {
         }
     }
 
-    async deleteContrato(contratoId: string): Promise<boolean> {
+    async deleteContrato(contratoId: string, userId: string, deleteDate: Date): Promise<boolean> {
         try {
-            const queryStr: string = 'CALL deleteContrato(?)';
-            const values: any[] = [contratoId];
+            const queryStr: string = 'CALL deleteContrato(?, ?, ?)';
+            const values: any[] = [contratoId, userId, deleteDate];
 
             const [result]: any = await query(queryStr, values);
 

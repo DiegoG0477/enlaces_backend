@@ -1,4 +1,4 @@
-import { Contrato } from "../../domain/entities/Contrato";
+import { ContratoCreateDto } from "../../domain/DTOS/ContratoCreateDto";
 import { AddContratoUseCase } from "../../application/AddContratoUseCase";
 import { Request, Response } from "express";
 
@@ -6,22 +6,25 @@ export class AddContratoController {
     constructor(private addContratoUseCase: AddContratoUseCase) {}
 
     async run(req: Request, res: Response){
-        const request = req.body;
-
-        const fechaContrato = new Date();
-
-        const contrato = new Contrato(
-            request.persona_id as string,
-            request.estatus as number,
-            request.descripcion as string,
-            fechaContrato,
-            request.id_user as number,
-            request.id_versionContrato as number,
-            request.ubicacion as number,
-            request.id_tipoContrato as number
-        );
-
         try {
+            const request = req.body;
+
+            const createDate = new Date();
+
+            const userId = (req as any).user.id;
+
+            const contrato = new ContratoCreateDto(
+                createDate,
+                request.persona_id as string,
+                request.estatus as number,
+                request.descripcion as string,
+                request.fechaContrato as Date,
+                userId,
+                request.id_versionContrato as number,
+                request.ubicacion as number,
+                request.id_tipoContrato as number
+            );
+
             const contratoAdded = await this.addContratoUseCase.run(contrato);
 
             if (!contratoAdded) {

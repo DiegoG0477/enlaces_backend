@@ -5,10 +5,13 @@ export class DeleteContratoController {
     constructor(private useCase: DeleteContratoUseCase) {}
 
     async run(req: Request, res: Response) {
-        const contratoId: string = req.params.contratoId;
-
         try {
-            const deleted = await this.useCase.run(contratoId);
+            const contratoId: string = req.params.contratoId;
+
+            const deleteDate = new Date();
+            const userId = (req as any).user.id;
+
+            const deleted = await this.useCase.run(contratoId, userId, deleteDate);
 
             if (!deleted) {
                 res.status(404).json({

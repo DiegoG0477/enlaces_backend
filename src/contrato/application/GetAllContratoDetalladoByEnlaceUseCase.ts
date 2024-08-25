@@ -1,4 +1,4 @@
-import { ContratoDto } from "../domain/entities/ContratoDto";
+import { ContratoDto } from "../domain/DTOS/ContratoDto";
 import { ContratoRepository } from "../domain/repositories/ContratoRepository";
 
 export class GetAllContratoDetalladoByEnlaceUseCase{

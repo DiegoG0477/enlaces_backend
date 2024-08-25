@@ -1,6 +1,6 @@
 import { Contrato } from "../entities/Contrato";
 import { IctiTipos } from "../../../shared/domain/interfaces/IctiTipos";
-import { ContratoDto } from "../entities/ContratoDto";
+import { ContratoDto } from "../DTOS/ContratoDto";
 import { VersionContrato } from "../entities/VersionContrato";
 
 export interface ContratoRepository {
@@ -26,5 +26,5 @@ export interface ContratoRepository {
 
     updateContrato(contratoId:string, updateData:any):Promise<Contrato|null>;
 
-    deleteContrato(contratoId:string):Promise<boolean>;
+    deleteContrato(contratoId:string, userId: string, deleteDate: Date):Promise<boolean>;
 }

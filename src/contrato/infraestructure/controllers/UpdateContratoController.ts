@@ -5,19 +5,24 @@ export class UpdateContratoController {
     constructor(private updateContratoUseCase: UpdateContratoUseCase) {}
 
     async run(req: Request, res: Response){
-        const contratoId: string = req.params.contratoId;
-
-        const updateData: any = {
-            estatus: req.body.estatus,
-            descripcion: req.body.descripcion,
-            fechaContrato: req.body.fechaContrato,
-            userId: req.body.userId,
-            versionContratoId: req.body.id_versionContrato,
-            ubicacionId: req.body.ubicacion,
-            tipoContratoId: req.body.id_tipoContrato
-        };
-
         try {
+            const contratoId: string = req.params.contratoId;
+
+            const userId = (req as any).user.id;
+            const updateDate = new Date();
+    
+            const updateData: any = {
+                updatedBy: userId,
+                updatedAt: updateDate,
+                estatus: req.body.estatus,
+                descripcion: req.body.descripcion,
+                fechaContrato: req.body.fechaContrato,
+                userId: req.body.userId,
+                versionContratoId: req.body.id_versionContrato,
+                ubicacionId: req.body.ubicacion,
+                tipoContratoId: req.body.id_tipoContrato,
+            };
+
             const contrato = await this.updateContratoUseCase.run(contratoId, updateData);
 
             if(!contrato || contrato === null){
