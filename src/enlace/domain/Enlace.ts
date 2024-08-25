@@ -9,7 +9,7 @@ export class Enlace{
         // hace referencia a la tabla de departamentos (departamentoId)
         readonly adscripcionId: number,
         readonly cargoId: number,
-        readonly userId: number,
+        readonly createdBy: number,
         readonly tipoPersonaId: number,
         readonly direccionId: number,
         private id?: string,

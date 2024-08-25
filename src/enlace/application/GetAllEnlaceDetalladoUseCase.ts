@@ -1,5 +1,5 @@
 import { EnlaceRepository } from "../domain/EnlaceRepository";
-import { EnlaceDto } from "../domain/EnlaceDto";
+import { EnlaceDto } from "../domain/DTOs/EnlaceDto";
 
 export class GetAllEnlaceDetalladoUseCase {
     constructor(

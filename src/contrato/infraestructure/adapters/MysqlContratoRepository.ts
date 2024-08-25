@@ -18,7 +18,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.estatus, 
                 contrato.descripcion, 
                 contrato.fechaContrato, 
-                contrato.userId, 
+                contrato.createdBy, 
                 contrato.versionContratoId, 
                 contrato.ubicacion, 
                 contrato.tipoContratoId
@@ -39,7 +39,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contratoSql.estatus, 
                 contratoSql.descripcion, 
                 contratoSql.fechaContrato, 
-                contratoSql.id_user, 
+                contratoSql.createdBy, 
                 contratoSql.id_versionContrato, 
                 contratoSql.ubicacion, 
                 contratoSql.id_tipoContrato, 
@@ -70,7 +70,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.estatus, 
                 contrato.descripcion, 
                 contrato.fechaContrato, 
-                contrato.id_user, 
+                contrato.createdBy, 
                 contrato.id_versionContrato, 
                 contrato.ubicacion, 
                 contrato.id_tipoContrato, 
@@ -100,7 +100,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.estatus, 
                 contrato.descripcion, 
                 contrato.fechaContrato, 
-                contrato.id_user, 
+                contrato.createdBy, 
                 contrato.id_versionContrato, 
                 contrato.ubicacion, 
                 contrato.id_tipoContrato, 
@@ -336,7 +336,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 updateData.fechaContrato ?? null,
                 updateData.userId ?? null,
                 updateData.versionContratoId ?? null,
-                updateData.ubicacion ?? null,
+                updateData.ubicacionId ?? null,
                 updateData.tipoContratoId ?? null
             ];
 
@@ -353,7 +353,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contratoSql.estatus,
                 contratoSql.descripcion, 
                 contratoSql.fechaContrato, 
-                contratoSql.id_user,
+                contratoSql.createdBy,
                 contratoSql.id_versionContrato, 
                 contratoSql.ubicacion,
                 contratoSql.id_tipoContrato, 

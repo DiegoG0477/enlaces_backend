@@ -1,17 +1,19 @@
 import { EnlaceRepository } from "../domain/EnlaceRepository";
 import { Enlace } from "../domain/Enlace";
-import { EnlaceDto } from "../domain/EnlaceDto";
+import { EnlaceDto } from "../domain/DTOs/EnlaceDto";
 import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
-import { EnlaceCompletoDto } from "../domain/EnlaceCompletoDto";
+import { EnlaceCompletoDto } from "../domain/DTOs/EnlaceCompletoDto";
+import { EnlaceCreateDto } from "../domain/DTOs/EnlaceCreateDto";
 
 const signale = new Signale({scope: 'MysqlEnlaceRepository'});
 
 export class MysqlEnlaceRepository implements EnlaceRepository {
-    async addEnlace(enlace: Enlace): Promise<Enlace | null> {
+    async addEnlace(enlace: EnlaceCreateDto): Promise<Enlace | null> {
         try{
-            const queryStr: string = 'CALL addEnlace(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const queryStr: string = 'CALL addEnlace(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
             const values: any[] = [
+                enlace.createdAt,
                 enlace.nombre, 
                 enlace.apellidoP, 
                 enlace.apellidoM, 
@@ -20,7 +22,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.estatus, 
                 enlace.adscripcionId, 
                 enlace.cargoId, 
-                enlace.userId, 
+                enlace.createdBy, 
                 enlace.tipoPersonaId, 
                 enlace.direccionId
             ];
@@ -58,7 +60,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.estatus,
                 enlace.adscripcion_id,
                 enlace.cargo_id,
-                enlace.auth_user_id,
+                enlace.createdBy,
                 enlace.tipoPersona_id,
                 enlace.direccion_id,
                 enlace.idPersona
@@ -93,7 +95,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlaceSql.estatus,
                 enlaceSql.adscripcion_id,
                 enlaceSql.cargo_id,
-                enlaceSql.auth_user_id,
+                enlaceSql.createdBy,
                 enlaceSql.tipoPersona_id,
                 enlaceSql.direccion_id,
                 enlaceSql.idPersona
@@ -118,8 +120,6 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             }
 
             const enlaceSql = result[0][0];
-
-            console.log(enlaceSql);
 
             const enlaceCompleto: EnlaceCompletoDto = new EnlaceCompletoDto(
                 enlaceSql.dependenciaId,
@@ -168,7 +168,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.estatus,
                 enlace.adscripcion_id,
                 enlace.cargo_id,
-                enlace.auth_user_id,
+                enlace.createdBy,
                 enlace.tipoPersona_id,
                 enlace.direccion_id,
                 enlace.idPersona
@@ -213,10 +213,12 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
     async updateEnlace(enlaceId: string, updateData: any): Promise<Enlace | null> {
         try {
-            const queryStr: string = "CALL updateEnlace(?,?,?,?,?,?,?,?,?,?,?,?)";
+            const queryStr: string = "CALL updateEnlace(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             const values: any = [
                 enlaceId,
+                updateData.updatedAt,
+                updateData.updatedBy,
                 updateData.nombre ?? null,
                 updateData.apellidoPaterno ?? null,
                 updateData.apellidoMaterno ?? null,
@@ -225,7 +227,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 updateData.estatus ?? null, //de momento no se actualiza, mas que en el delete
                 updateData.adscripcion ?? null,
                 updateData.cargo ?? null,
-                updateData.auth_user_id ?? null, //de momento no se actualiza
+                updateData.createdBy ?? null, //de momento no se actualiza
                 updateData.tipoPersona_id ?? null, //de momento no se actualiza
                 updateData.direccion ?? null,
             ];
@@ -247,7 +249,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlaceSql.estatus,
                 enlaceSql.adscripcion_id,
                 enlaceSql.cargo_id,
-                enlaceSql.auth_user_id,
+                enlaceSql.createdBy,
                 enlaceSql.tipoPersona_id,
                 enlaceSql.direccion_id,
                 enlaceSql.idPersona
@@ -261,14 +263,12 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
         }
     }
 
-    async deleteEnlace(id: string): Promise<boolean> {
+    async deleteEnlace(id: string, userId:string, deletedAt: Date): Promise<boolean> {
         try {
-            const queryStr: string = 'CALL deleteEnlace(?)';
-            const values: any[] = [id];
+            const queryStr: string = 'CALL deleteEnlace(?, ?, ?)';
+            const values: any[] = [id, userId, deletedAt];
 
             const [result]: any = await query(queryStr, values);
-
-            console.log(result);
 
             if(result.affectedRows === 0){
                 return false;

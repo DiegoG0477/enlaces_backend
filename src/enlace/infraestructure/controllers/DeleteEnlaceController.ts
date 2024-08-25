@@ -8,7 +8,9 @@ export class DeleteEnlaceController {
         const enlaceId: string = req.params.enlaceId;
 
         try {
-            const deleted = await this.useCase.run(enlaceId);
+            const deletedAt = new Date();
+            const userId = (req as any).user.id;
+            const deleted = await this.useCase.run(enlaceId, userId, deletedAt);
 
             if (!deleted) {
                 res.status(404).json({

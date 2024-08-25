@@ -6,7 +6,16 @@ export class UpdateContratoController {
 
     async run(req: Request, res: Response){
         const contratoId: string = req.params.contratoId;
-        const updateData: any = req.body;
+
+        const updateData: any = {
+            estatus: req.body.estatus,
+            descripcion: req.body.descripcion,
+            fechaContrato: req.body.fechaContrato,
+            userId: req.body.userId,
+            versionContratoId: req.body.id_versionContrato,
+            ubicacionId: req.body.ubicacion,
+            tipoContratoId: req.body.id_tipoContrato
+        };
 
         try {
             const contrato = await this.updateContratoUseCase.run(contratoId, updateData);

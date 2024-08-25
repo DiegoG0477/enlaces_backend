@@ -1,4 +1,4 @@
-import { Enlace } from "../../domain/Enlace";
+import { EnlaceCreateDto } from "../../domain/DTOs/EnlaceCreateDto";
 import { AddEnlaceUseCase } from "../../application/AddEnlaceUseCase";
 import { Request, Response } from "express";
 
@@ -8,7 +8,8 @@ export class AddEnlaceController {
     async run(req: Request, res: Response) {
         const request: any = req.body;
 
-        const enlace = new Enlace(
+        const enlace = new EnlaceCreateDto(
+            new Date(),
             request.nombre as string,
             request.apellidoP as string,
             request.apellidoM as string,

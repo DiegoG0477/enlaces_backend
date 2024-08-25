@@ -1,4 +1,4 @@
-import { EnlaceCompletoDto } from "../domain/EnlaceCompletoDto";
+import { EnlaceCompletoDto } from "../domain/DTOs/EnlaceCompletoDto";
 import { EnlaceRepository } from "../domain/EnlaceRepository";
 
 export class GetEnlaceCompletoByIdUseCase {

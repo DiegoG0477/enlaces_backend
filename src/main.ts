@@ -15,16 +15,32 @@ import { usuarioRouter } from "./usuario/infraestructure/UsuarioRouter";
 
 dotenv.config();
 
+// agregar el getServicios, getAllServicioDetallado, getDeletedServicios, getModifiedServicios
+// (y las versiones detalladas del de deleted y modified) tanto en servicios, contratos, usuarios y enlaces
+
+// agregar el getDeletedContratos
+// agregar el getDeletedEnlaces
+// agregar el getDeletedUsuarios
+// agregar el modifiedContratos
+// agregar el modifiedEnlaces
+// agregar el modifiedUsuarios
+
+//en las tablas de servicios, contratos, usuarios y servicios agregar los siguientes campos:
+// [deletedAt, modifiedAt, createdAt, createdBy, modifiedBy, deletedBy]
+
+//en la tabla de enlaces, esos campos ya fueron agregados, solo falta agregarlos para que se tomen en cuenta
+// en las consultas de get los deleted y get los updated
+
 const PORT = process.env.PORT ?? 3000;
 
-const CLIENT_HOST = process.env.CLIENT_HOST ?? "http://localhost:3000";
+const CLIENT_HOST = process.env.CLIENT_HOST ?? "http://localhost:3001";
 
 const app = express();
 
 const signale = new Signale();
 
 const allowedOrigins = [
-    'http://localhost:3001', 
+    'http://localhost:3000', 
     'http://localhost:5173', 
     'http://localhost:5176',
     'http://localhost:3003',
