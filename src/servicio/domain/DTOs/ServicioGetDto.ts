@@ -1,6 +1,7 @@
-export class Servicio{
+export class ServicioGetDto{
     constructor(
-        private folio: string,
+        readonly id: number,
+        readonly folio: string,
         readonly nombreSolicitante: string,
         readonly nombreReceptor: string,
         readonly fechaInicio: string,
@@ -15,29 +16,13 @@ export class Servicio{
         readonly observaciones: string,
         readonly tipoEnvio: string,
         readonly estatus: number,
-        readonly tipoServicioId: number,
+        readonly tipoServicio: string,
         readonly contratoId: number,
-        readonly tipoActividadId: number,
-        readonly estadoServicioId: number,
-        readonly direccionId: number,
-        readonly cargoId: number,
+        readonly tipoActividad: string,
+        readonly estadoServicio: string,
+        readonly direccion: string,
+        readonly dependencia: string,
+        readonly cargo: string,
         readonly createdBy: number,
-        private id?: string,
     ){}
-
-    getId(): string | undefined {
-        return this.id;
-    }
-
-    setId(id: string): void {
-        this.id = id;
-    }
-
-    getFolio(): string {
-        return this.folio;
-    }
-
-    setFolio(folio: string): void {
-        this.folio = folio;
-    }
 }

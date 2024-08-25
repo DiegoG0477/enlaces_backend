@@ -1,10 +1,12 @@
+import { ServicioGetDto } from "./DTOs/ServicioGetDto";
 import { Servicio } from "./Servicio";
 
 export interface ServicioRepository {
     addServicio(servicio: Servicio): Promise<Servicio|null>;
-    getServicios(): Promise<Servicio[] | null>;
-    getServicioById(id: string): Promise<Servicio | null>;
-    getServiciosByEstatus(estatus: number): Promise<Servicio[] | null>;
+    getAllDomainServicio(): Promise<Servicio[] | null>;
+    getAllServicio(): Promise<ServicioGetDto[] | null>;
+    getDomainServicioById(servicioId: string): Promise<Servicio | null>;
+    getServicioById(servicioId: string): Promise<ServicioGetDto | null>;
     updateServicio(servicioId: string, updateData: any): Promise<Servicio | null>;
-    deleteServicio(id: string): Promise<boolean>;
+    // deleteServicio(servicioId: string, userId: string, deletedAt: Date): Promise<boolean>;
 }
