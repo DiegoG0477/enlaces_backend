@@ -17,7 +17,6 @@ export class UpdateContratoController {
                 estatus: req.body.estatus,
                 descripcion: req.body.descripcion,
                 fechaContrato: req.body.fechaContrato,
-                userId: req.body.userId,
                 versionContratoId: req.body.id_versionContrato,
                 ubicacionId: req.body.ubicacion,
                 tipoContratoId: req.body.id_tipoContrato,

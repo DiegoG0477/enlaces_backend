@@ -332,18 +332,17 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async updateContrato(contratoId: string, updateData: any): Promise<Contrato | null> {
         try{
-            const queryStr: string = 'CALL updateContrato(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const queryStr: string = 'CALL updateContrato(?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
             const values: any[] = [
                 contratoId ?? null,
                 updateData.estatus ?? null,
                 updateData.descripcion ?? null,
                 updateData.fechaContrato ?? null,
-                updateData.userId ?? null,
+                updateData.updatedBy ?? null,
                 updateData.versionContratoId ?? null,
                 updateData.ubicacionId ?? null,
                 updateData.tipoContratoId ?? null,
-                updateData.updatedBy,
                 updateData.updatedAt
             ];
 
