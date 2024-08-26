@@ -236,7 +236,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if(!result[0][0].idPersona){
+            if(result[1][0].affectedRows === 0 || result[0][0].affectedRows === 0){
                 return null;
             }
 

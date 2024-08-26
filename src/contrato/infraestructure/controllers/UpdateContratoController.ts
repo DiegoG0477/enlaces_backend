@@ -8,7 +8,8 @@ export class UpdateContratoController {
         try {
             const contratoId: string = req.params.contratoId;
 
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = '7';
             const updateDate = new Date();
     
             const updateData: any = {

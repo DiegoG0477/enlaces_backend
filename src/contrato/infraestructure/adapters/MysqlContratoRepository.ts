@@ -344,7 +344,9 @@ export class MysqlContratoRepository implements ContratoRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if (result[0].length === 0) {
+            console.log(result);
+
+            if (result[1][0].affectedRows === 0 || result[0][0].affectedRows === 0) {
                 return null;
             }
 
