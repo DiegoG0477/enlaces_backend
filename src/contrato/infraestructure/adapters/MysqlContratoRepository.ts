@@ -5,6 +5,8 @@ import { TipoInstalacion } from "../../domain/entities/TipoInstalacion";
 import { VersionContrato } from "../../domain/entities/VersionContrato";
 import { ContratoDto } from "../../domain/DTOS/ContratoDto";
 import { ContratoCreateDto } from "../../domain/DTOS/ContratoCreateDto";
+import { ContratoGetDeletedDto } from "../../domain/DTOS/ContratoGetDeletedDto";
+import { ContratoGetModifiedDto } from "../../domain/DTOS/ContratoGetModifiedDto";
 import { query } from "../../../database/MysqlAdapter";
 import { Signale } from "signale";
 
@@ -376,6 +378,246 @@ export class MysqlContratoRepository implements ContratoRepository {
         try {
             const queryStr: string = 'CALL deleteContrato(?, ?, ?)';
             const values: any[] = [contratoId, userId, deleteDate];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllDeletedContrato(): Promise<ContratoGetDeletedDto[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllDeletedContrato()';
+            const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratos: ContratoGetDeletedDto[] = result[0].map((contrato: any) => new ContratoGetDeletedDto(
+                contrato.deletedAt,
+                contrato.deletedBy,
+                contrato.createdBy,
+                contrato.id,
+                contrato.nombreEnlace,
+                contrato.apellidoPEnlace,
+                contrato.apellidoMEnlace,
+                contrato.enlaceId,
+                contrato.estatus,
+                contrato.descripcion,
+                contrato.fechaContrato,
+                contrato.versionContrato,
+                contrato.ubicacion,
+                contrato.tipoContrato
+            ));
+
+            return contratos;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllModifiedContrato(): Promise<ContratoGetModifiedDto[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllModifiedContrato()';
+            const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratos: ContratoGetModifiedDto[] = result[0].map((contrato: any) => new ContratoGetModifiedDto(
+                contrato.updatedAt,
+                contrato.updatedBy,
+                contrato.createdBy,
+                contrato.id,
+                contrato.nombreEnlace,
+                contrato.apellidoPEnlace,
+                contrato.apellidoMEnlace,
+                contrato.enlaceId,
+                contrato.estatus,
+                contrato.descripcion,
+                contrato.fechaContrato,
+                contrato.versionContrato,
+                contrato.ubicacion,
+                contrato.tipoContrato
+            ));
+
+            return contratos;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getDeletedContratoById(contratoId: string): Promise<ContratoGetDeletedDto | null> {
+        try {
+            const queryStr: string = 'CALL getDeletedContratoById(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: ContratoGetDeletedDto = new ContratoGetDeletedDto(
+                contratoSql.deletedAt,
+                contratoSql.deletedBy,
+                contratoSql.createdBy,
+                contratoSql.id,
+                contratoSql.nombreEnlace,
+                contratoSql.apellidoPEnlace,
+                contratoSql.apellidoMEnlace,
+                contratoSql.enlaceId,
+                contratoSql.estatus,
+                contratoSql.descripcion,
+                contratoSql.fechaContrato,
+                contratoSql.versionContrato,
+                contratoSql.ubicacion,
+                contratoSql.tipoContrato
+            );
+
+            return contrato;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getDomainDeletedContratoById(contratoId: string): Promise<Contrato | null> {
+        try {
+            const queryStr: string = 'CALL getDomainDeletedContratoById(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: Contrato = new Contrato(
+                contratoSql.persona_id,
+                contratoSql.estatus,
+                contratoSql.descripcion, 
+                contratoSql.fechaContrato, 
+                contratoSql.createdBy,
+                contratoSql.id_versionContrato, 
+                contratoSql.ubicacion,
+                contratoSql.id_tipoContrato, 
+                contratoSql.idContrato
+            );
+
+            return contrato;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getDomainModifiedContratoById(contratoId: string): Promise<Contrato | null> {
+        try {
+            const queryStr: string = 'CALL getDomainModifiedContratoById(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: Contrato = new Contrato(
+                contratoSql.persona_id,
+                contratoSql.estatus,
+                contratoSql.descripcion, 
+                contratoSql.fechaContrato, 
+                contratoSql.createdBy,
+                contratoSql.id_versionContrato, 
+                contratoSql.ubicacion,
+                contratoSql.id_tipoContrato, 
+                contratoSql.idContrato
+            );
+
+            return contrato;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getModifiedContratoById(contratoId: string): Promise<ContratoGetModifiedDto | null> {
+        try {
+            const queryStr: string = 'CALL getModifiedContratoById(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: ContratoGetModifiedDto = new ContratoGetModifiedDto(
+                contratoSql.updatedAt,
+                contratoSql.updatedBy,
+                contratoSql.createdBy,
+                contratoSql.id,
+                contratoSql.nombreEnlace,
+                contratoSql.apellidoPEnlace,
+                contratoSql.apellidoMEnlace,
+                contratoSql.enlaceId,
+                contratoSql.estatus,
+                contratoSql.descripcion,
+                contratoSql.fechaContrato,
+                contratoSql.versionContrato,
+                contratoSql.ubicacion,
+                contratoSql.tipoContrato
+            );
+
+            return contrato;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async restoreContrato(contratoId: string): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL restoreContrato(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async restoreModifiedContrato(modifiedId: string): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL restoreModifiedContrato(?)';
+            const values: any[] = [modifiedId];
 
             const [result]: any = await query(queryStr, values);
 

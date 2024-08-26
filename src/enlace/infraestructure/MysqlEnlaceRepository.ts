@@ -5,6 +5,8 @@ import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 import { EnlaceCompletoDto } from "../domain/DTOs/EnlaceCompletoDto";
 import { EnlaceCreateDto } from "../domain/DTOs/EnlaceCreateDto";
+import { EnlaceGetDeletedDto } from "../domain/DTOs/EnlaceGetDeletedDto";
+import { EnlaceGetModifiedDto } from "../domain/DTOs/EnlaceGetModifiedDto";
 
 const signale = new Signale({scope: 'MysqlEnlaceRepository'});
 
@@ -275,6 +277,246 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             }
 
             return true;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllDeletedEnlace(): Promise<EnlaceGetDeletedDto[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllDeletedEnlace()';
+            const [result]: any = await query(queryStr, []);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaces: EnlaceGetDeletedDto[] = result[0].map((enlace: any) => new EnlaceGetDeletedDto(
+                enlace.deletedAt,
+                enlace.deletedBy,
+                enlace.createdBy,
+                enlace.id,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.dependencia,
+                enlace.cargo,
+                enlace.direccion,
+                enlace.adscripcion
+            ));
+
+            return enlaces;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }    
+    }
+
+    async getAllModifiedEnlace(): Promise<EnlaceGetModifiedDto[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllModifiedEnlace()';
+            const [result]: any = await query(queryStr, []);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaces: EnlaceGetModifiedDto[] = result[0].map((enlace: any) => new EnlaceGetModifiedDto(
+                enlace.updatedAt,
+                enlace.updatedBy,
+                enlace.createdBy,
+                enlace.id,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.dependencia,
+                enlace.cargo,
+                enlace.direccion,
+                enlace.adscripcion
+            ));
+
+            return enlaces;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getDeletedEnlaceById(enlaceId: string): Promise<EnlaceGetDeletedDto | null> {
+        try {
+            const queryStr: string = 'CALL getDeletedEnlaceById(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlace = result[0][0];
+
+            const enlaceDeleted: EnlaceGetDeletedDto = new EnlaceGetDeletedDto(
+                enlace.deletedAt,
+                enlace.deletedBy,
+                enlace.createdBy,
+                enlace.id,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.dependencia,
+                enlace.cargo,
+                enlace.direccion,
+                enlace.adscripcion
+            );
+
+            return enlaceDeleted;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getModifiedEnlaceById(enlaceId: string): Promise<EnlaceGetModifiedDto | null> {
+        try {
+            const queryStr: string = 'CALL getModifiedEnlaceById(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlace = result[0][0];
+
+            const enlaceModified: EnlaceGetModifiedDto = new EnlaceGetModifiedDto(
+                enlace.updatedAt,
+                enlace.updatedBy,
+                enlace.createdBy,
+                enlace.id,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.dependencia,
+                enlace.cargo,
+                enlace.direccion,
+                enlace.adscripcion
+            );
+
+            return enlaceModified;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getDomainDeletedEnlaceById(enlaceId: string): Promise<Enlace | null> {
+        try {
+            const queryStr: string = 'CALL getDomainDeletedEnlaceById(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlace = result[0][0];
+
+            const deletedEnlace: Enlace = new Enlace(
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.adscripcion_id,
+                enlace.cargo_id,
+                enlace.createdBy,
+                enlace.tipoPersona_id,
+                enlace.direccion_id,
+                enlace.idPersona
+            );
+
+            return deletedEnlace;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getDomainModifiedEnlaceById(enlaceId: string): Promise<Enlace | null> {
+        try {
+            const queryStr: string = 'CALL getDomainModifiedEnlaceById(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlace = result[0][0];
+
+            const modifiedEnlace: Enlace = new Enlace(
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.adscripcion_id,
+                enlace.cargo_id,
+                enlace.createdBy,
+                enlace.tipoPersona_id,
+                enlace.direccion_id,
+                enlace.idPersona
+            );
+
+            return modifiedEnlace;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async restoreEnlace(enlaceId: string): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL restoreEnlace(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async restoreModifiedEnlace(modifiedId: string): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL restoreModifiedEnlace(?)';
+            const values: any[] = [modifiedId];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+            
         } catch (error: any) {
             signale.error(error);
             throw error;

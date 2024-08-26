@@ -6,6 +6,14 @@ import { GetEnlaceCompletoByIdUseCase } from "../application/GetEnlaceCompletoBy
 import { GetEnlacesUseCase } from "../application/GetEnlacesUseCase";
 import { UpdateEnlaceUseCase } from "../application/UpdateEnlaceUseCase";
 import { DeleteEnlaceUseCase } from "../application/DeleteEnlaceUseCase";
+import { GetAllDeletedEnlaceUseCase } from "../application/GetAllDeletedEnlaceUseCase";
+import { GetAllModifiedEnlaceUseCase } from "../application/GetAllModifiedEnlaceUseCase";
+import { GetDeletedEnlaceByIdUseCase } from "../application/GetDeletedEnlaceByIdUseCase";
+import { GetDomainDeletedEnlaceByIdUseCase } from "../application/GetDomainDeletedEnlaceByIdUseCase";
+import { GetDomainModifiedEnlaceByIdUseCase } from "../application/GetDomainModifiedEnlaceByIdUseCase";
+import { GetModifiedEnlaceByIdUseCase } from "../application/GetModifiedEnlaceByIdUseCase";
+import { RestoreEnlaceUseCase } from "../application/RestoreEnlaceUseCase";
+import { RestoreModifiedEnlaceUseCase } from "../application/RestoreModifiedEnlaceUseCase";
 
 import { AddEnlaceController } from "./controllers/AddEnlaceController";
 import { GetEnlaceByIdController } from "./controllers/GetEnlaceByIdController";
@@ -15,6 +23,14 @@ import { GetEnlacesController } from "./controllers/GetEnlacesController";
 import { GetEnlaceCompletoByIdController } from "./controllers/GetEnlaceCompletoByIdController";
 import { UpdateEnlaceController } from "./controllers/UpdateEnlaceController";
 import { DeleteEnlaceController } from "./controllers/DeleteEnlaceController";
+import { GetAllDeletedEnlaceController } from "./controllers/GetAllDeletedEnlaceController";
+import { GetAllModifiedEnlaceController } from "./controllers/GetAllModifiedEnlaceController";
+import { GetDeletedEnlaceByIdController } from "./controllers/GetDeletedEnlaceByIdController";
+import { GetDomainDeletedEnlaceByIdController } from "./controllers/GetDomainDeletedEnlaceByIdController";
+import { GetDomainModifiedEnlaceByIdController } from "./controllers/GetDomainModifiedEnlaceByIdController";
+import { GetModifiedEnlaceByIdController } from "./controllers/GetModifiedEnlaceByIdController";
+import { RestoreEnlaceController } from "./controllers/RestoreEnlaceController";
+import { RestoreModifiedEnlaceController } from "./controllers/RestoreModifiedEnlaceController";
 
 import { MysqlEnlaceRepository } from "./MysqlEnlaceRepository";
 
@@ -28,6 +44,14 @@ const getEnlaceCompletoByIdUseCase = new GetEnlaceCompletoByIdUseCase(mysqlEnlac
 const getAllEnlaceDetalladoUseCase = new GetAllEnlaceDetalladoUseCase(mysqlEnlaceRepository);
 const updateEnlaceUseCase = new UpdateEnlaceUseCase(mysqlEnlaceRepository);
 const deleteEnlaceUseCase = new DeleteEnlaceUseCase(mysqlEnlaceRepository);
+const getAllDeletedEnlaceUseCase = new GetAllDeletedEnlaceUseCase(mysqlEnlaceRepository);
+const getAllModifiedEnlaceUseCase = new GetAllModifiedEnlaceUseCase(mysqlEnlaceRepository);
+const getDeletedEnlaceByIdUseCase = new GetDeletedEnlaceByIdUseCase(mysqlEnlaceRepository);
+const getDomainDeletedEnlaceByIdUseCase = new GetDomainDeletedEnlaceByIdUseCase(mysqlEnlaceRepository);
+const getDomainModifiedEnlaceByIdUseCase = new GetDomainModifiedEnlaceByIdUseCase(mysqlEnlaceRepository);
+const getModifiedEnlaceByIdUseCase = new GetModifiedEnlaceByIdUseCase(mysqlEnlaceRepository);
+const restoreEnlaceUseCase = new RestoreEnlaceUseCase(mysqlEnlaceRepository);
+const restoreModifiedEnlaceUseCase = new RestoreModifiedEnlaceUseCase(mysqlEnlaceRepository);
 
 
 export const addEnlaceController = new AddEnlaceController(addEnlaceUseCase);
@@ -38,3 +62,11 @@ export const getEnlaceCompletoByIdController = new GetEnlaceCompletoByIdControll
 export const getAllEnlaceDetalladoController = new GetAllEnlaceDetalladoController(getAllEnlaceDetalladoUseCase);
 export const updateEnlaceController = new UpdateEnlaceController(updateEnlaceUseCase);
 export const deleteEnlaceController = new DeleteEnlaceController(deleteEnlaceUseCase);
+export const getAllDeletedEnlaceController = new GetAllDeletedEnlaceController(getAllDeletedEnlaceUseCase);
+export const getAllModifiedEnlaceController = new GetAllModifiedEnlaceController(getAllModifiedEnlaceUseCase);
+export const getDeletedEnlaceByIdController = new GetDeletedEnlaceByIdController(getDeletedEnlaceByIdUseCase);
+export const getDomainDeletedEnlaceByIdController = new GetDomainDeletedEnlaceByIdController(getDomainDeletedEnlaceByIdUseCase);
+export const getDomainModifiedEnlaceByIdController = new GetDomainModifiedEnlaceByIdController(getDomainModifiedEnlaceByIdUseCase);
+export const getModifiedEnlaceByIdController = new GetModifiedEnlaceByIdController(getModifiedEnlaceByIdUseCase);
+export const restoreEnlaceController = new RestoreEnlaceController(restoreEnlaceUseCase);
+export const restoreModifiedEnlaceController = new RestoreModifiedEnlaceController(restoreModifiedEnlaceUseCase);

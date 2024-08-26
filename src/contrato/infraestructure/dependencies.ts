@@ -6,6 +6,14 @@ import { GetAllContratoDetalladoByEnlaceUseCase } from "../application/GetAllCon
 import { GetContratoDetalladoByIdUseCase } from "../application/GetContratoDetalladoByIdUseCase";
 import { UpdateContratoUseCase } from "../application/UpdateContratoUseCase";
 import { DeleteContratoUseCase } from "../application/DeleteContratoUseCase";
+import { GetAllDeletedContratoUseCase } from "../application/GetAllDeletedContratoUseCase";
+import { GetAllModifiedContratoUseCase } from "../application/GetAllModifiedContratoUseCase";
+import { GetDeletedContratoByIdUseCase } from "../application/GetDeletedContratoByIdUseCase";
+import { GetDomainDeletedContratoByIdUseCase } from "../application/GetDomainDeletedContratoByIdUseCase";
+import { GetDomainModifiedContratoByIdUseCase } from "../application/GetDomainModifiedContratoUseCase";
+import { GetModifiedContratoByIdUseCase } from "../application/GetModifiedContratoByIdUseCase";
+import { RestoreContratoUseCase } from "../application/RestoreContratoUseCase";
+import { RestoreModifiedContratoUseCase } from "../application/RestoreModifiedContratoUseCase";
 
 import { GetAllTipoInstalacionUseCase } from "../application/GetAllTipoInstalacionUseCase";
 
@@ -26,6 +34,14 @@ import { GetAllContratoDetalladoByEnlaceController } from "./controllers/GetAllC
 import { GetContratoDetalladoByIdController } from "./controllers/GetContratoDetalladoByIdController";
 import { UpdateContratoController } from "./controllers/UpdateContratoController";
 import { DeleteContratoController } from "./controllers/DeleteContratoController";
+import { GetAllDeletedContratoController } from "./controllers/GetAllDeletedContratoController";
+import { GetAllModifiedContratoController } from "./controllers/GetAllModifiedContratoController";
+import { GetDeletedContratoByIdController } from "./controllers/GetDeletedContratoByIdController";
+import { GetDomainDeletedContratoByIdController } from "./controllers/GetDomainDeletedContratoByIdController";
+import { GetDomainModifiedContratoByIdController } from "./controllers/GetDomainModifiedContratoByIdController";
+import { GetModifiedContratoByIdController } from "./controllers/GetModifiedContratoByIdController";
+import { RestoreContratoController } from "./controllers/RestoreContratoController";
+import { RestoreModifiedContratoController } from "./controllers/RestoreModifiedContratoController";
 
 import { GetAllTipoInstalacionController } from "./controllers/GetAllTipoInstalacionController";
 
@@ -46,6 +62,14 @@ const getAllContratoDetalladoByEnlaceUseCase = new GetAllContratoDetalladoByEnla
 const getContratoDetalladoByIdUseCase = new GetContratoDetalladoByIdUseCase(mysqlContratoRepository);
 const updateContratoUseCase = new UpdateContratoUseCase(mysqlContratoRepository);
 const deleteContratoUseCase = new DeleteContratoUseCase(mysqlContratoRepository);
+const getAllDeletedContratoUseCase = new GetAllDeletedContratoUseCase(mysqlContratoRepository);
+const getAllModifiedContratoUseCase = new GetAllModifiedContratoUseCase(mysqlContratoRepository);
+const getDeletedContratoByIdUseCase = new GetDeletedContratoByIdUseCase(mysqlContratoRepository);
+const getDomainDeletedContratoByIdUseCase = new GetDomainDeletedContratoByIdUseCase(mysqlContratoRepository);
+const getDomainModifiedContratoByIdUseCase = new GetDomainModifiedContratoByIdUseCase(mysqlContratoRepository);
+const getModifiedContratoByIdUseCase = new GetModifiedContratoByIdUseCase(mysqlContratoRepository);
+const restoreContratoUseCase = new RestoreContratoUseCase(mysqlContratoRepository);
+const restoreModifiedContratoUseCase = new RestoreModifiedContratoUseCase(mysqlContratoRepository);
 
 export const addContratoController = new AddContratoController(addContratoUseCase);
 export const getContratoByEnlaceController = new GetContratosByEnlaceController(getContratoByEnlaceUseCase);
@@ -55,6 +79,14 @@ export const getAllContratoDetalladoByEnlaceController = new GetAllContratoDetal
 export const getContratoDetalladoByIdController = new GetContratoDetalladoByIdController(getContratoDetalladoByIdUseCase);
 export const updateContratoController = new UpdateContratoController(updateContratoUseCase);
 export const deleteContratoController = new DeleteContratoController(deleteContratoUseCase);
+export const getAllDeletedContratoController = new GetAllDeletedContratoController(getAllDeletedContratoUseCase);
+export const getAllModifiedContratoController = new GetAllModifiedContratoController(getAllModifiedContratoUseCase);
+export const getDeletedContratoByIdController = new GetDeletedContratoByIdController(getDeletedContratoByIdUseCase);
+export const getDomainDeletedContratoByIdController = new GetDomainDeletedContratoByIdController(getDomainDeletedContratoByIdUseCase);
+export const getDomainModifiedContratoByIdController = new GetDomainModifiedContratoByIdController(getDomainModifiedContratoByIdUseCase);
+export const getModifiedContratoByIdController = new GetModifiedContratoByIdController(getModifiedContratoByIdUseCase);
+export const restoreContratoController = new RestoreContratoController(restoreContratoUseCase);
+export const restoreModifiedContratoController = new RestoreModifiedContratoController(restoreModifiedContratoUseCase);
 
 const getAllTipoInstalacionUseCase = new GetAllTipoInstalacionUseCase(mysqlContratoRepository);
 
