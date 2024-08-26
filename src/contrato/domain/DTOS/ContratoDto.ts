@@ -4,6 +4,7 @@ export class ContratoDto {
         readonly nombreEnlace: string,
         readonly apellidoPEnlace: string,
         readonly apellidoMEnlace: string,
+        readonly correoEnlace: string,
         readonly enlaceId: string,
         readonly estatus: number,
         readonly descripcion: string,

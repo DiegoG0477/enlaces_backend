@@ -17,6 +17,7 @@ export class ServicioGetDto{
         readonly tipoEnvio: string,
         readonly estatus: number,
         readonly tipoServicio: string,
+        readonly codigoServicio: string,
         readonly contratoId: number,
         readonly tipoActividad: string,
         readonly estadoServicio: string,

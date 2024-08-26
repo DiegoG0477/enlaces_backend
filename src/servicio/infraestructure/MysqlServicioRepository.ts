@@ -6,6 +6,10 @@ import { ServicioUpdateDto } from "../domain/DTOs/ServicioUpdateDto";
 import { FolioData } from "../domain/entities/FolioData";
 import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
+import { IctiTipos } from "../../shared/domain/interfaces/IctiTipos";
+import { TipoServicio } from "../domain/entities/TipoServicio";
+import { TipoActividad } from "../domain/entities/TipoActividad";
+import { EstadoServicio } from "../domain/entities/EstadoServicio";
 
 const logger: Signale = new Signale({ "scope": "MysqlServicioRepository" });
 
@@ -97,7 +101,7 @@ export class MysqlServicioRepository implements ServicioRepository {
 
     async getAllServicio(): Promise<ServicioGetDto[] | null> {
         try {
-            const queryStr: string = 'CALL getAllServicio()';
+            const queryStr: string = 'CALL getAllServicioDetallado()';
             const [result]: any = await query(queryStr, []);
 
             if (result[0].length === 0) {
@@ -116,12 +120,16 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicio.descripcionFalla,
                 servicio.descripccionActividad,
                 servicio.nivel,
+                // fotos es el boolean de si el servicio incluye fotos o no
+                // se recibe 0 o 1
                 servicio.fotos,
                 servicio.observaciones,
                 servicio.tipoEnvio,
+                // estatus es el id del estatus del servicio
                 servicio.estatus,
                 servicio.tipoServicio,
-                servicio.contrato,
+                servicio.codigoServicio,
+                servicio.contratoId,
                 servicio.tipoActividad,
                 servicio.estadoServicio,
                 servicio.direccion,
@@ -148,29 +156,31 @@ export class MysqlServicioRepository implements ServicioRepository {
                 return null;
             }
 
+            const servicioSql = result[0][0];
+
             const servicio: Servicio = new Servicio(
-                result[0][0].folio,
-                result[0][0].nombre_solicitante,
-                result[0][0].nombre_receptor,
-                result[0][0].fecha_inicio,
-                result[0][0].fecha_termino,
-                result[0][0].hora_inicio,
-                result[0][0].hora_termino,
-                result[0][0].descripcion_falla,
-                result[0][0].descripccion_actividad,
-                result[0][0].nivel,
-                result[0][0].fotos,
-                result[0][0].observaciones,
-                result[0][0].tipo_envio,
-                result[0][0].estatus,
-                result[0][0].id_tipo_servicio,
-                result[0][0].id_contrato,
-                result[0][0].id_tipo_actividad,
-                result[0][0].id_estado_servicio,
-                result[0][0].id_direccion,
-                result[0][0].id_cargo,
-                result[0][0].createdBy,
-                result[0][0].id
+                servicioSql.folio,
+                servicioSql.nombre_solicitante,
+                servicioSql.nombre_receptor,
+                servicioSql.fecha_inicio,
+                servicioSql.fecha_termino,
+                servicioSql.hora_inicio,
+                servicioSql.hora_termino,
+                servicioSql.descripcion_falla,
+                servicioSql.descripccion_actividad,
+                servicioSql.nivel,
+                servicioSql.fotos,
+                servicioSql.observaciones,
+                servicioSql.tipo_envio,
+                servicioSql.estatus,
+                servicioSql.id_tipo_servicio,
+                servicioSql.id_contrato,
+                servicioSql.id_tipo_actividad,
+                servicioSql.id_estado_servicio,
+                servicioSql.id_direccion,
+                servicioSql.id_cargo,
+                servicioSql.createdBy,
+                servicioSql.id
             );
 
             return servicio;
@@ -182,7 +192,7 @@ export class MysqlServicioRepository implements ServicioRepository {
 
     async getServicioById(servicioId: string): Promise<ServicioGetDto | null> {
         try {
-            const queryStr: string = 'CALL getServicioById(?)';
+            const queryStr: string = 'CALL getServicioDetalladoById(?)';
             const values: any[] = [servicioId];
 
             const [result]: any = await query(queryStr, values);
@@ -191,30 +201,33 @@ export class MysqlServicioRepository implements ServicioRepository {
                 return null;
             }
 
+            const servicioSql = result[0][0];
+
             const servicio: ServicioGetDto = new ServicioGetDto(
-                result[0][0].id,
-                result[0][0].folio,
-                result[0][0].nombre_solicitante,
-                result[0][0].nombre_receptor,
-                result[0][0].fecha_inicio,
-                result[0][0].fecha_termino,
-                result[0][0].hora_inicio,
-                result[0][0].hora_termino,
-                result[0][0].descripcion_falla,
-                result[0][0].descripccion_actividad,
-                result[0][0].nivel,
-                result[0][0].fotos,
-                result[0][0].observaciones,
-                result[0][0].tipo_envio,
-                result[0][0].estatus,
-                result[0][0].tipo_servicio,
-                result[0][0].contrato,
-                result[0][0].tipo_actividad,
-                result[0][0].estado_servicio,
-                result[0][0].direccion,
-                result[0][0].dependencia,
-                result[0][0].cargo,
-                result[0][0].createdBy,
+                servicioSql.id,
+                servicioSql.folio,
+                servicioSql.nombreSolicitante,
+                servicioSql.nombreReceptor,
+                servicioSql.fechaInicio,
+                servicioSql.fechaTermino,
+                servicioSql.horaInicio,
+                servicioSql.horaTermino,
+                servicioSql.descripcionFalla,
+                servicioSql.descripccionActividad,
+                servicioSql.nivel,
+                servicioSql.fotos,
+                servicioSql.observaciones,
+                servicioSql.tipoEnvio,
+                servicioSql.estatus,
+                servicioSql.tipoServicio,
+                servicioSql.codigoServicio,
+                servicioSql.contratoId,
+                servicioSql.tipoActividad,
+                servicioSql.estadoServicio,
+                servicioSql.direccion,
+                servicioSql.dependencia,
+                servicioSql.cargo,
+                servicioSql.createdBy
             );
 
             return servicio;
@@ -332,6 +345,73 @@ export class MysqlServicioRepository implements ServicioRepository {
             }
 
             return result[0][0].codigo;
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getAllEstadoServicio(): Promise<EstadoServicio[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllEstadoServicio()';
+            const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const estados: EstadoServicio[] = result[0].map((estado: any) => new EstadoServicio(
+                estado.id,
+                estado.nombre,
+                estado.estatus
+            ));
+
+            return estados;
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getAllTipoActividad(): Promise<IctiTipos[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllTipoActividad()';
+            const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const tiposActividad: TipoActividad[] = result[0].map((tipo: any) => new TipoActividad(
+                tipo.id,
+                tipo.nombre,
+                tipo.estatus
+            ));
+
+            return tiposActividad;
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getAllTipoServicio(): Promise<TipoServicio[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllTipoServicio()';
+            const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const tiposServicio: TipoServicio[] = result[0].map((tipo: any) => new TipoServicio(
+                tipo.idServicio,
+                tipo.nombre,
+                tipo.estatus,
+                tipo.codigo
+            ));
+
+            return tiposServicio;
         } catch (error: any) {
             logger.error(error);
             throw error;
