@@ -30,8 +30,6 @@ export class MysqlContratoRepository implements ContratoRepository {
     
             const [result]: any = await query(queryStr, values);
 
-            console.log(result);
-
             if (result[0].length === 0) {
                 return null;
             }
@@ -253,8 +251,6 @@ export class MysqlContratoRepository implements ContratoRepository {
         try {
             const queryStr: string = 'CALL getAllTipoContrato()';
             const [result]: any = await query(queryStr, []);
-
-            console.log(result);
 
             if (result[0].length === 0) {
                 return null;

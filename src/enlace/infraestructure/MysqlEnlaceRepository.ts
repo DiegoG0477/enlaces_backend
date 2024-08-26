@@ -222,21 +222,21 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 updateData.updatedAt,
                 updateData.updatedBy,
                 updateData.nombre ?? null,
-                updateData.apellidoPaterno ?? null,
-                updateData.apellidoMaterno ?? null,
+                updateData.apellidoP ?? null,
+                updateData.apellidoM ?? null,
                 updateData.correo ?? null,
                 updateData.telefono ?? null,
                 updateData.estatus ?? null, //de momento no se actualiza, mas que en el delete
-                updateData.adscripcion ?? null,
-                updateData.cargo ?? null,
+                updateData.adscripcionId ?? null,
+                updateData.cargoId ?? null,
                 updateData.createdBy ?? null, //de momento no se actualiza
-                updateData.tipoPersona_id ?? null, //de momento no se actualiza
-                updateData.direccion ?? null,
+                updateData.tipoPersonaId ?? null, //de momento no se actualiza
+                updateData.direccionId ?? null,
             ];
 
             const [result]: any = await query(queryStr, values);
 
-            if(result[0].length === 0){
+            if(!result[0][0].idPersona){
                 return null;
             }
 

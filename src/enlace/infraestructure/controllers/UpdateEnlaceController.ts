@@ -9,7 +9,8 @@ export class UpdateEnlaceController {
             const enlaceId: string = req.params.enlaceId;
 
             const updateDate = new Date();
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = '7';
             
             const updateData: any = {
                 updatedAt: updateDate,
