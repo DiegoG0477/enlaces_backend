@@ -3,6 +3,7 @@ import { Servicio } from "../domain/entities/Servicio";
 import { ServicioCreateDto } from "../domain/DTOs/ServicioCreateDto";
 import { ServicioGetDto } from "../domain/DTOs/ServicioGetDto";
 import { ServicioUpdateDto } from "../domain/DTOs/ServicioUpdateDto";
+import { FolioData } from "../domain/entities/FolioData";
 import { query } from "../../database/MysqlAdapter";
 import { Signale } from "signale";
 
@@ -289,6 +290,48 @@ export class MysqlServicioRepository implements ServicioRepository {
 
             return updatedServicio;
 
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getLastFolioByTipoServicio(tipoServicioId: number): Promise<FolioData | null> {
+        try {
+            const queryStr: string = 'CALL getLastFolioByTipoServicio(?)';
+            const values: any[] = [tipoServicioId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const folioData: FolioData = new FolioData(
+                result[0][0].folio,
+                result[0][0].createdAt,
+                result[0][0].codigo
+            );
+
+            return folioData;
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getCodigoFolioByTipoServicioId(tipoServicioId: number): Promise<string | null> {
+        try {
+            const queryStr: string = 'CALL getCodigoFolioByTipoServicioId(?)';
+            const values: any[] = [tipoServicioId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            return result[0][0].codigo;
         } catch (error: any) {
             logger.error(error);
             throw error;

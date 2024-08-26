@@ -10,7 +10,8 @@ export class AddServicioController {
             const request: any = req.body;
 
             const createDate = new Date();
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = 7;
     
             const servicio = new ServicioCreateDto(
                 createDate,
@@ -27,7 +28,10 @@ export class AddServicioController {
                 request.fotos as number,
                 request.observaciones as string,
                 request.tipoEnvio as string,
-                request.estatus as number,
+                // request.estatus as number,
+                // por defecto el estatus activo es 1, de momento
+                // solo se estan agregando recursos activos
+                1,
                 request.tipoServicioId as number,
                 request.contratoId as number,
                 request.tipoActividadId as number,
