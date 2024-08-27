@@ -38,8 +38,8 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicio.contratoId,
                 servicio.tipoActividadId,
                 servicio.estadoServicioId,
-                servicio.direccionId,
-                servicio.cargoId,
+                servicio.direccionId ?? null,
+                servicio.cargoId ?? null,
                 servicio.createdBy
             ];
 
@@ -239,11 +239,10 @@ export class MysqlServicioRepository implements ServicioRepository {
 
     async updateServicio(servicioId: string, updateData: any): Promise<Servicio | null> {
         try{
-            const queryStr: string = 'CALL updateServicio(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const queryStr: string = 'CALL updateServicio(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
             const values: any[] = [
                 servicioId,
-                updateData.folio ?? null,
                 updateData.nombreSolicitante ?? null,
                 updateData.nombreReceptor ?? null,
                 updateData.fechaInicio ?? null,
@@ -268,7 +267,7 @@ export class MysqlServicioRepository implements ServicioRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if (result[0].length === 0) {
+            if(result[1][0].affectedRows === 0 || result[0][0].affectedRows === 0){
                 return null;
             }
 
@@ -289,7 +288,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicioSql.nivel,
                 servicioSql.fotos,
                 servicioSql.observaciones,
-                servicioSql.tipoEnvio,
+                servicioSql.tipo_envio,
                 servicioSql.estatus,
                 servicioSql.id_tipo_servicio,
                 servicioSql.id_contrato,
@@ -297,7 +296,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicioSql.id_estado_servicio,
                 servicioSql.id_direccion,
                 servicioSql.id_cargo,
-                servicioSql.updatedBy,
+                servicioSql.createdBy,
                 servicioSql.id
             );
 

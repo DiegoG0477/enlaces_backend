@@ -9,6 +9,7 @@ import { ContratoGetDeletedDto } from "../../domain/DTOS/ContratoGetDeletedDto";
 import { ContratoGetModifiedDto } from "../../domain/DTOS/ContratoGetModifiedDto";
 import { query } from "../../../database/MysqlAdapter";
 import { Signale } from "signale";
+import { ContratoTableDto } from "../../domain/DTOS/ContratoTableDto";
 
 const signale = new Signale({scope: 'MysqlContratoRepository'});
 
@@ -20,13 +21,15 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.enlaceId, 
                 contrato.estatus, 
                 contrato.descripcion, 
-                contrato.fechaContrato, 
+                contrato.fechaContrato,
                 contrato.createdBy, 
                 contrato.versionContratoId, 
                 contrato.ubicacion, 
                 contrato.tipoContratoId,
                 contrato.createdAt
             ];
+
+            console.log(values);
     
             const [result]: any = await query(queryStr, values);
 
@@ -37,16 +40,16 @@ export class MysqlContratoRepository implements ContratoRepository {
             const contratoSql = result[0][0];
     
             const newContrato: Contrato = new ContratoCreateDto(
-                contratoSql.persona_id, 
-                contratoSql.estatus, 
-                contratoSql.descripcion, 
-                contratoSql.fechaContrato, 
-                contratoSql.createdBy, 
-                contratoSql.id_versionContrato, 
-                contratoSql.ubicacion, 
-                contratoSql.id_tipoContrato, 
-                contratoSql.idContrato,
-                contratoSql.createdAt
+                contratoSql.createdAt,
+                contratoSql.persona_id,
+                contratoSql.estatus,
+                contratoSql.descripcion,
+                contratoSql.fechaContrato,
+                contratoSql.createdBy,
+                contratoSql.id_versionContrato,
+                contratoSql.ubicacion,
+                contratoSql.id_tipoContrato,
+                contratoSql.idContrato
             );
     
             return newContrato;
@@ -335,6 +338,8 @@ export class MysqlContratoRepository implements ContratoRepository {
 
             const values: any[] = [
                 contratoId ?? null,
+                // el estatus se modifica a 1 si es un contrato activo
+                //o a 2 si se decide desactivar el contrato
                 updateData.estatus ?? null,
                 updateData.descripcion ?? null,
                 updateData.fechaContrato ?? null,
@@ -346,8 +351,6 @@ export class MysqlContratoRepository implements ContratoRepository {
             ];
 
             const [result]: any = await query(queryStr, values);
-
-            console.log(result);
 
             if (result[1][0].affectedRows === 0 || result[0][0].affectedRows === 0) {
                 return null;
@@ -391,7 +394,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async getAllDeletedContrato(): Promise<ContratoGetDeletedDto[] | null> {
         try {
-            const queryStr: string = 'CALL getAllDeletedContrato()';
+            const queryStr: string = 'CALL getAllDeletedContratoDetallado()';
             const [result]: any = await query(queryStr, []);
 
             if (result[0].length === 0) {
@@ -426,7 +429,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async getAllModifiedContrato(): Promise<ContratoGetModifiedDto[] | null> {
         try {
-            const queryStr: string = 'CALL getAllModifiedContrato()';
+            const queryStr: string = 'CALL getAllModifiedContratoDetallado()';
             const [result]: any = await query(queryStr, []);
 
             if (result[0].length === 0) {
@@ -437,6 +440,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.updatedAt,
                 contrato.updatedBy,
                 contrato.createdBy,
+                contrato.backedUpAt,
                 contrato.id,
                 contrato.nombreEnlace,
                 contrato.apellidoPEnlace,
@@ -461,7 +465,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async getDeletedContratoById(contratoId: string): Promise<ContratoGetDeletedDto | null> {
         try {
-            const queryStr: string = 'CALL getDeletedContratoById(?)';
+            const queryStr: string = 'CALL getDeletedContratoDetalladoById(?)';
             const values: any[] = [contratoId];
 
             const [result]: any = await query(queryStr, values);
@@ -500,7 +504,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async getDomainDeletedContratoById(contratoId: string): Promise<Contrato | null> {
         try {
-            const queryStr: string = 'CALL getDomainDeletedContratoById(?)';
+            const queryStr: string = 'CALL getDeletedContratoById(?)';
             const values: any[] = [contratoId];
 
             const [result]: any = await query(queryStr, values);
@@ -531,10 +535,10 @@ export class MysqlContratoRepository implements ContratoRepository {
         }
     }
 
-    async getDomainModifiedContratoById(contratoId: string): Promise<Contrato | null> {
+    async getDomainModifiedContratoById(modifiedId: string): Promise<ContratoTableDto | null> {
         try {
-            const queryStr: string = 'CALL getDomainModifiedContratoById(?)';
-            const values: any[] = [contratoId];
+            const queryStr: string = 'CALL getModifiedContratoById(?)';
+            const values: any[] = [modifiedId];
 
             const [result]: any = await query(queryStr, values);
 
@@ -544,16 +548,21 @@ export class MysqlContratoRepository implements ContratoRepository {
 
             const contratoSql = result[0][0];
 
-            const contrato: Contrato = new Contrato(
-                contratoSql.persona_id,
+            const contrato: ContratoTableDto = new ContratoTableDto(
+                contratoSql.deletedBy,
+                contratoSql.deletedAt,
+                contratoSql.updatedBy,
+                contratoSql.updatedAt,
+                contratoSql.createdAt,
+                contratoSql.id_enlace,
                 contratoSql.estatus,
-                contratoSql.descripcion, 
-                contratoSql.fechaContrato, 
+                contratoSql.descripcion,
+                contratoSql.fecha_contrato,
                 contratoSql.createdBy,
-                contratoSql.id_versionContrato, 
+                contratoSql.id_version_contrato,
                 contratoSql.ubicacion,
-                contratoSql.id_tipoContrato, 
-                contratoSql.idContrato
+                contratoSql.id_tipo_contrato,
+                contratoSql.id_contrato
             );
 
             return contrato;
@@ -566,7 +575,7 @@ export class MysqlContratoRepository implements ContratoRepository {
 
     async getModifiedContratoById(contratoId: string): Promise<ContratoGetModifiedDto | null> {
         try {
-            const queryStr: string = 'CALL getModifiedContratoById(?)';
+            const queryStr: string = 'CALL getModifiedContratoDetalladoById(?)';
             const values: any[] = [contratoId];
 
             const [result]: any = await query(queryStr, values);
@@ -581,6 +590,7 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contratoSql.updatedAt,
                 contratoSql.updatedBy,
                 contratoSql.createdBy,
+                contratoSql.backedUpAt,
                 contratoSql.id,
                 contratoSql.nombreEnlace,
                 contratoSql.apellidoPEnlace,
@@ -618,15 +628,102 @@ export class MysqlContratoRepository implements ContratoRepository {
         }
     }
 
-    async restoreModifiedContrato(modifiedId: string): Promise<boolean> {
+    async restoreModifiedContrato(modifiedId: string, backup: ContratoTableDto): Promise<boolean> {
         try {
-            const queryStr: string = 'CALL restoreModifiedContrato(?)';
-            const values: any[] = [modifiedId];
+            const queryStr: string = 'CALL restoreModifiedContrato(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const values: any[] = [
+                modifiedId,
+                backup.deletedBy ?? null,
+                backup.deletedAt ?? null,
+                backup.updatedBy ?? null,
+                backup.updatedAt ?? null,
+                backup.createdAt,
+                backup.enlaceId,
+                backup.estatus,
+                backup.descripcion,
+                backup.fechaContrato,
+                backup.createdBy,
+                backup.versionContratoId,
+                backup.ubicacion,
+                backup.tipoContratoId,
+                backup.id
+            ];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result[0][0].affectedRows > 0;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getBackupContratoById(contratoId: string): Promise<ContratoTableDto | null> {
+        try {
+            const queryStr: string = 'CALL getContratoById(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratoSql = result[0][0];
+
+            const contrato: ContratoTableDto = new ContratoTableDto(
+                contratoSql.deletedBy,
+                contratoSql.deletedAt,
+                contratoSql.updatedBy,
+                contratoSql.updatedAt,
+                contratoSql.createdAt,
+                contratoSql.persona_id,
+                contratoSql.estatus,
+                contratoSql.descripcion,
+                contratoSql.fechaContrato,
+                contratoSql.createdBy,
+                contratoSql.id_versionContrato,
+                contratoSql.ubicacion,
+                contratoSql.id_tipoContrato,
+                contratoSql.idContrato
+            );
+
+            return contrato;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async backupContrato(contrato: ContratoTableDto, backupDate: Date): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL backupContrato(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+            const values: any[] = [
+                backupDate,
+                // puede que sea un elemento no eliminado
+                // o que jamas haya sido modificado
+                contrato.deletedBy ?? null,
+                contrato.deletedAt ?? null,
+                contrato.updatedBy ?? null,
+                contrato.updatedAt ?? null,
+                contrato.createdAt,
+                contrato.enlaceId,
+                contrato.estatus,
+                contrato.descripcion,
+                contrato.fechaContrato,
+                contrato.createdBy,
+                contrato.versionContratoId,
+                contrato.ubicacion,
+                contrato.tipoContratoId,
+                contrato.id
+            ];
 
             const [result]: any = await query(queryStr, values);
 
             return result.affectedRows > 0;
-
         } catch (error: any) {
             signale.error(error);
             throw error;

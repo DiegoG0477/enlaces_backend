@@ -3,6 +3,7 @@ import { IctiTipos } from "../../../shared/domain/interfaces/IctiTipos";
 import { ContratoDto } from "../DTOS/ContratoDto";
 import { ContratoGetDeletedDto } from "../DTOS/ContratoGetDeletedDto";
 import { ContratoGetModifiedDto } from "../DTOS/ContratoGetModifiedDto";
+import { ContratoTableDto } from "../DTOS/ContratoTableDto";
 import { VersionContrato } from "../entities/VersionContrato";
 
 export interface ContratoRepository {
@@ -40,11 +41,15 @@ export interface ContratoRepository {
 
     getModifiedContratoById(contratoId:string):Promise<ContratoGetModifiedDto|null>;
 
-    getDomainModifiedContratoById(contratoId:string):Promise<Contrato|null>;
+    getDomainModifiedContratoById(contratoId:string):Promise<ContratoTableDto|null>;
     
     // restaura un contrato eliminado
     restoreContrato(contratoId:string):Promise<boolean>;
 
     // restaura un contrato modificado
-    restoreModifiedContrato(modifiedId:string):Promise<boolean>;
+    restoreModifiedContrato(modifiedId:string, backup: ContratoTableDto):Promise<boolean>;
+
+    getBackupContratoById(contratoId:string):Promise<ContratoTableDto|null>;
+
+    backupContrato(contrato:ContratoTableDto, backupDate: Date):Promise<boolean>;
 }

@@ -9,7 +9,8 @@ export class DeleteContratoController {
             const contratoId: string = req.params.contratoId;
 
             const deleteDate = new Date();
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = '7';
 
             const deleted = await this.useCase.run(contratoId, userId, deleteDate);
 

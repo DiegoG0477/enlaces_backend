@@ -8,11 +8,11 @@ export class UpdateServicioController {
         try {
             const request: any = req.body;
             const servicioId = req.params.servicioId;
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = '7'
             const updateDate = new Date();
 
             const updateData: any = {
-                folio: request.folio,
                 nombreSolicitante: request.nombreSolicitante,
                 nombreReceptor: request.nombreReceptor,
                 fechaInicio: request.fechaInicio,
@@ -27,7 +27,6 @@ export class UpdateServicioController {
                 tipoEnvio: request.tipoEnvio,
                 estatus: request.estatus,
                 tipoServicioId: request.tipoServicioId,
-                contratoId: request.contratoId,
                 tipoActividadId: request.tipoActividadId,
                 estadoServicioId: request.estadoServicioId,
                 direccionId: request.direccionId,

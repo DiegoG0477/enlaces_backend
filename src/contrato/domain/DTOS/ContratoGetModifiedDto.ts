@@ -5,6 +5,7 @@ export class ContratoGetModifiedDto extends ContratoDto {
         readonly updatedAt: Date,
         readonly updatedBy: number,
         readonly createdBy: number,
+        readonly backedUpAt: Date,
         id: string,
         nombreEnlace: string,
         apellidoPEnlace: string,

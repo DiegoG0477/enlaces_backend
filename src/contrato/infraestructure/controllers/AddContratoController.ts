@@ -11,7 +11,8 @@ export class AddContratoController {
 
             const createDate = new Date();
 
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = 7;
 
             const contrato = new ContratoCreateDto(
                 createDate,
@@ -24,6 +25,8 @@ export class AddContratoController {
                 request.ubicacion as number,
                 request.id_tipoContrato as number
             );
+
+            console.log(contrato);
 
             const contratoAdded = await this.addContratoUseCase.run(contrato);
 
