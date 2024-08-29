@@ -20,7 +20,7 @@ export class GetAllTipoContratoController {
                 tipoContrato: tipoContrato
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(500).json({
                 msg: 'Tipos de contrato no encontrados',
                 error: error.message
             });

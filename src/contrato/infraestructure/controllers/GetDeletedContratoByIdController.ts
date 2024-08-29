@@ -21,7 +21,7 @@ export class GetDeletedContratoByIdController {
                 contrato: deletedContrato
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(400).json({
                 msg: 'Contrato no encontrado',
                 error: error.message
             });

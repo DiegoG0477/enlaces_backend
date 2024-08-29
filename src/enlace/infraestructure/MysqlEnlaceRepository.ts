@@ -11,9 +11,9 @@ import { EnlaceGetModifiedDto } from "../domain/DTOs/EnlaceGetModifiedDto";
 const signale = new Signale({scope: 'MysqlEnlaceRepository'});
 
 export class MysqlEnlaceRepository implements EnlaceRepository {
-    async addEnlace(enlace: EnlaceCreateDto): Promise<Enlace | null> {
+    async addEnlace(enlace: EnlaceCreateDto): Promise<EnlaceCreateDto | null> {
         try{
-            const queryStr: string = 'CALL addEnlace(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const queryStr: string = 'CALL addEnlace(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
             const values: any[] = [
                 enlace.createdAt,
                 enlace.nombre, 
@@ -26,7 +26,8 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.cargoId, 
                 enlace.createdBy, 
                 enlace.tipoPersonaId, 
-                enlace.direccionId
+                enlace.direccionId,
+                enlace.dependenciaId
             ];
 
             const [result]: any = await query(queryStr, values);
@@ -36,6 +37,43 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
             }
 
             enlace.setId(result.insertId);
+
+            return enlace;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getEnlaceByDependenciaId(dependenciaId: number): Promise<Enlace | null> {
+        try {
+            const queryStr: string = 'CALL getEnlaceByDependenciaId(?)';
+            const values: any[] = [dependenciaId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaceSql = result[0][0];
+
+            const enlace: Enlace = new Enlace(
+                enlaceSql.nombre,
+                enlaceSql.apellidoP,
+                enlaceSql.apellidoM,
+                enlaceSql.correo,
+                enlaceSql.telefono,
+                enlaceSql.estatus,
+                enlaceSql.adscripcion_id,
+                enlaceSql.cargo_id,
+                enlaceSql.createdBy,
+                enlaceSql.tipoPersona_id,
+                enlaceSql.direccion_id,
+                enlaceSql.dependencia_id,
+                enlaceSql.idPersona,
+                enlaceSql.createdAt
+            );
 
             return enlace;
         } catch (error: any) {
@@ -65,6 +103,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.createdBy,
                 enlace.tipoPersona_id,
                 enlace.direccion_id,
+                enlace.dependencia_id,
                 enlace.idPersona
             ));
 
@@ -100,6 +139,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlaceSql.createdBy,
                 enlaceSql.tipoPersona_id,
                 enlaceSql.direccion_id,
+                enlaceSql.dependencia_id,
                 enlaceSql.idPersona
             );
 
@@ -173,6 +213,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 enlace.createdBy,
                 enlace.tipoPersona_id,
                 enlace.direccion_id,
+                enlace.dependencia_id,
                 enlace.idPersona
             ));
 
@@ -183,10 +224,11 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
         }
     }
 
-    async getAllEnlaceDetallado(): Promise<any[] | null> {
+    async getAllEnlaceDetallado(estatus: number): Promise<any[] | null> {
         try {
-            const queryStr: string = 'CALL getAllEnlaceDetallado()';
-            const [result]: any = await query(queryStr, []);
+            const queryStr: string = 'CALL getAllEnlaceDetallado(?)';
+            const values: any[] = [estatus !== 0 ? estatus : null];
+            const [result]: any = await query(queryStr, values);
 
             if(result[0].length === 0){
                 return null;
@@ -226,7 +268,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
                 updateData.apellidoM ?? null,
                 updateData.correo ?? null,
                 updateData.telefono ?? null,
-                updateData.estatus ?? null, //de momento no se actualiza, mas que en el delete
+                updateData.estatus ?? null, // de momento no se actualiza, mas que en el delete
                 updateData.adscripcionId ?? null,
                 updateData.cargoId ?? null,
                 updateData.createdBy ?? null, //de momento no se actualiza

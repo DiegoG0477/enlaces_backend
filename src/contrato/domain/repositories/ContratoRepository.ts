@@ -13,7 +13,7 @@ export interface ContratoRepository {
 
     getContratos():Promise<Contrato[]|null>;
 
-    getAllContratoDetallado():Promise<ContratoDto[]|null>;
+    getAllContratoDetallado(estatus: number):Promise<ContratoDto[]|null>;
 
     getContratoDetalladoById(contratoId:string):Promise<ContratoDto|null>;
     
@@ -40,6 +40,8 @@ export interface ContratoRepository {
     getAllModifiedContrato():Promise<ContratoGetModifiedDto[]|null>;
 
     getModifiedContratoById(contratoId:string):Promise<ContratoGetModifiedDto|null>;
+
+    getAllModifiedContratoByContratoId(contratoId:string):Promise<ContratoGetModifiedDto[]|null>;
 
     getDomainModifiedContratoById(contratoId:string):Promise<ContratoTableDto|null>;
     

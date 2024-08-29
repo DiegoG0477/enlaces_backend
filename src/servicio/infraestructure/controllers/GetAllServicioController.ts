@@ -6,7 +6,15 @@ export class GetAllServicioController {
 
     async run(req: Request, res: Response) {
         try {
-            const servicios = await this.useCase.run();
+            const { estatus } = req.query;
+
+            let estatusNumber: number = 0;
+
+            if (estatus) {
+                estatusNumber = parseInt(estatus as string);
+            }
+
+            const servicios = await this.useCase.run(estatusNumber);
 
             if (!servicios) {
                 res.status(404).json({

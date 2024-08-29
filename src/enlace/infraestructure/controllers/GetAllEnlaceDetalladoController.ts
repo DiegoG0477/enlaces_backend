@@ -6,7 +6,15 @@ export class GetAllEnlaceDetalladoController {
 
     async run(req: Request, res: Response){
         try {
-            const enlaces = await this.getAllEnlaceDetalladoUseCase.run();
+            const { estatus } = req.query;
+
+            let estatusNumber: number = 0;
+
+            if(estatus){
+                estatusNumber = parseInt(estatus as string);
+            }
+
+            const enlaces = await this.getAllEnlaceDetalladoUseCase.run(estatusNumber);
 
             if(!enlaces){
                 res.status(404).json({

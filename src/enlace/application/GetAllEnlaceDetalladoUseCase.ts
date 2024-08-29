@@ -6,7 +6,7 @@ export class GetAllEnlaceDetalladoUseCase {
         readonly enlaceRepository: EnlaceRepository,
     ) {}
 
-    async run(): Promise<EnlaceDto[] | null> {
-        return await this.enlaceRepository.getAllEnlaceDetallado();
+    async run(estatus: number): Promise<EnlaceDto[] | null> {
+        return await this.enlaceRepository.getAllEnlaceDetallado(estatus);
     }
 }

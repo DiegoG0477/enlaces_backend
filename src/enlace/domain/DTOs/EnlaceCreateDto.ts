@@ -14,6 +14,7 @@ export class EnlaceCreateDto extends Enlace {
         createdBy: number,
         tipoPersonaId: number,
         direccionId: number,
+        dependenciaId: number,
         id?: string,
     ) {
         super(
@@ -28,6 +29,7 @@ export class EnlaceCreateDto extends Enlace {
             createdBy,
             tipoPersonaId,
             direccionId,
+            dependenciaId,
             id,
         );
     }

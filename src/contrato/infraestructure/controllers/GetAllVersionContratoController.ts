@@ -20,7 +20,7 @@ export class GetAllVersionContratoController {
                 versionContrato: versionContrato
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(500).json({
                 msg: 'Versiones de contrato no encontradas',
                 error: error.message
             });

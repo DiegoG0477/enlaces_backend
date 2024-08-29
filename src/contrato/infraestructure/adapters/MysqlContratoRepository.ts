@@ -121,10 +121,11 @@ export class MysqlContratoRepository implements ContratoRepository {
         }
     }
 
-    async getAllContratoDetallado(): Promise<any[] | null> {
+    async getAllContratoDetallado(estatus: number): Promise<any[] | null> {
         try {
-            const queryStr: string = 'CALL getAllContratoDetallado()';
-            const [result]: any = await query(queryStr, []);
+            const queryStr: string = 'CALL getAllContratoDetallado(?)';
+            const values: any[] = [estatus != 0 ? estatus : null];
+            const [result]: any = await query(queryStr, values);
 
             if (result[0].length === 0) {
                 return null;
@@ -431,6 +432,44 @@ export class MysqlContratoRepository implements ContratoRepository {
         try {
             const queryStr: string = 'CALL getAllModifiedContratoDetallado()';
             const [result]: any = await query(queryStr, []);
+
+            if (result[0].length === 0) {
+                return null;
+            }
+
+            const contratos: ContratoGetModifiedDto[] = result[0].map((contrato: any) => new ContratoGetModifiedDto(
+                contrato.updatedAt,
+                contrato.updatedBy,
+                contrato.createdBy,
+                contrato.backedUpAt,
+                contrato.id,
+                contrato.nombreEnlace,
+                contrato.apellidoPEnlace,
+                contrato.apellidoMEnlace,
+                contrato.correoEnlace,
+                contrato.enlaceId,
+                contrato.estatus,
+                contrato.descripcion,
+                contrato.fechaContrato,
+                contrato.versionContrato,
+                contrato.ubicacion,
+                contrato.tipoContrato
+            ));
+
+            return contratos;
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllModifiedContratoByContratoId(contratoId: string): Promise<ContratoGetModifiedDto[] | null> {
+        try {
+            const queryStr: string = 'CALL getAllModifiedContratoDetalladoByContratoId(?)';
+            const values: any[] = [contratoId];
+
+            const [result]: any = await query(queryStr, values);
 
             if (result[0].length === 0) {
                 return null;

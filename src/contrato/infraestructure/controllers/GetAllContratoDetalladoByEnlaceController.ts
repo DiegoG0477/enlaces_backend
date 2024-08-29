@@ -21,7 +21,7 @@ export class GetAllContratoDetalladoByEnlaceController {
                 contrato: allContratoDetallado
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(400).json({
                 msg: 'Contratos no encontrados',
                 error: error.message
             });

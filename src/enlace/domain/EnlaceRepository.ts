@@ -3,11 +3,13 @@ import { EnlaceDto } from "./DTOs/EnlaceDto";
 import { EnlaceCompletoDto } from "./DTOs/EnlaceCompletoDto";
 import { EnlaceGetDeletedDto } from "./DTOs/EnlaceGetDeletedDto";
 import { EnlaceGetModifiedDto } from "./DTOs/EnlaceGetModifiedDto";
+import { EnlaceCreateDto } from "./DTOs/EnlaceCreateDto";
 
 export interface EnlaceRepository {
-    addEnlace(Enlace: Enlace): Promise<Enlace|null>;
+    addEnlace(Enlace: Enlace): Promise<EnlaceCreateDto|null>;
+    getEnlaceByDependenciaId(dependenciaId: number): Promise<Enlace | null>;
     getEnlaces(): Promise<Enlace[] | null>;
-    getAllEnlaceDetallado(): Promise<EnlaceDto[] | null>;
+    getAllEnlaceDetallado(estatus: number): Promise<EnlaceDto[] | null>;
     getEnlaceById(id: string): Promise<Enlace | null>;
     getEnlaceCompletoById(enlaceId: string): Promise<EnlaceCompletoDto | null>;
     getEnlacesByEstatus(estatus: number): Promise<Enlace[] | null>;

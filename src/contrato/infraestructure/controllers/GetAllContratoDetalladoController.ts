@@ -6,22 +6,31 @@ export class GetAllEnlaceDetalladoController {
 
     async run(req: Request, res: Response){
         try {
-            const allContratoDetallado = await this.getAllContratoDetalladoUseCase.run();
+            //query param de estatus en el get
+            const { estatus } = req.query;
+
+            let estatusNumber: number = 0;
+
+            if(estatus){
+                estatusNumber = parseInt(estatus as string);
+            }
+            
+            const allContratoDetallado = await this.getAllContratoDetalladoUseCase.run(estatusNumber);
 
             if(!allContratoDetallado){
                 res.status(404).json({
-                    msg: 'No se encontraron enlaces'
+                    msg: 'No se encontraron contratos'
                 });
                 return;
             }
 
             res.status(200).json({
-                msg: 'Enlaces encontrados',
+                msg: 'contratos encontrados',
                 contratos: allContratoDetallado
             });
         } catch (error: any) {
-            res.status(404).json({
-                msg: 'Enlaces no encontrados',
+            res.status(400).json({
+                msg: 'contratos no encontrados',
                 error: error.message
             });
         }

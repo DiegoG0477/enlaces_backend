@@ -22,7 +22,7 @@ export class GetVersionesByTipoContratoIdController {
                 versiones: versiones
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(400).json({
                 msg: 'Versiones de contrato no encontradas',
                 error: error.message
             });

@@ -10,6 +10,7 @@ import {
     updateContratoController,
     getAllDeletedContratoController,
     getAllModifiedContratoController,
+    getAllModifiedContratoByContratoIdController,
     getDeletedContratoByIdController,
     getDomainDeletedContratoByIdController,
     getDomainModifiedContratoByIdController,
@@ -41,6 +42,7 @@ contratoRouter.get('/deleted/detallados/:contratoId', (req, res) => getDeletedCo
 contratoRouter.get('/deleted/:contratoId', (req, res) => getDomainDeletedContratoByIdController.run(req, res));
 contratoRouter.get('/modified/:modifiedId', (req, res) => getDomainModifiedContratoByIdController.run(req, res));
 contratoRouter.get('/modified/detallados/:modifiedId', (req, res) => getModifiedContratoByIdController.run(req, res));
+contratoRouter.get('/modified/detallados/contratos/:contratoId', (req, res) => getAllModifiedContratoByContratoIdController.run(req, res));
 contratoRouter.patch('/restore/deleted', (req, res) => restoreContratoController.run(req, res));
 contratoRouter.patch('/restore/modified', (req, res) => restoreModifiedContratoController.run(req, res));
 

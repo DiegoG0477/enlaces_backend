@@ -21,7 +21,7 @@ export class RestoreModifiedContratoController {
                 contrato: restoredContrato
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(400).json({
                 msg: 'Contrato no restaurado',
                 error: error.message
             });

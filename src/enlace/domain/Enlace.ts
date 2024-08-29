@@ -12,7 +12,9 @@ export class Enlace{
         readonly createdBy: number,
         readonly tipoPersonaId: number,
         readonly direccionId: number,
+        readonly dependenciaId: number,
         private id?: string,
+        readonly createdAt?: Date,
     ){}
 
     getId(): string{

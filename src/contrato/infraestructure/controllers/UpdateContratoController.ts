@@ -37,7 +37,7 @@ export class UpdateContratoController {
                 contrato: contrato
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(400).json({
                 msg: 'Contrato no actualizado',
                 error: error.message
             });

@@ -8,6 +8,7 @@ import { UpdateContratoUseCase } from "../application/UpdateContratoUseCase";
 import { DeleteContratoUseCase } from "../application/DeleteContratoUseCase";
 import { GetAllDeletedContratoUseCase } from "../application/GetAllDeletedContratoUseCase";
 import { GetAllModifiedContratoUseCase } from "../application/GetAllModifiedContratoUseCase";
+import { GetAllModifiedContratoByContratoIdUseCase } from "../application/GetAllModifiedContratoByContratoIdUseCase";
 import { GetDeletedContratoByIdUseCase } from "../application/GetDeletedContratoByIdUseCase";
 import { GetDomainDeletedContratoByIdUseCase } from "../application/GetDomainDeletedContratoByIdUseCase";
 import { GetDomainModifiedContratoByIdUseCase } from "../application/GetDomainModifiedContratoUseCase";
@@ -36,6 +37,7 @@ import { UpdateContratoController } from "./controllers/UpdateContratoController
 import { DeleteContratoController } from "./controllers/DeleteContratoController";
 import { GetAllDeletedContratoController } from "./controllers/GetAllDeletedContratoController";
 import { GetAllModifiedContratoController } from "./controllers/GetAllModifiedContratoController";
+import { GetAllModifiedContratoByContratoIdController } from "./controllers/GetAllModifiedContratoByContratoIdController";
 import { GetDeletedContratoByIdController } from "./controllers/GetDeletedContratoByIdController";
 import { GetDomainDeletedContratoByIdController } from "./controllers/GetDomainDeletedContratoByIdController";
 import { GetDomainModifiedContratoByIdController } from "./controllers/GetDomainModifiedContratoByIdController";
@@ -64,6 +66,7 @@ const updateContratoUseCase = new UpdateContratoUseCase(mysqlContratoRepository)
 const deleteContratoUseCase = new DeleteContratoUseCase(mysqlContratoRepository);
 const getAllDeletedContratoUseCase = new GetAllDeletedContratoUseCase(mysqlContratoRepository);
 const getAllModifiedContratoUseCase = new GetAllModifiedContratoUseCase(mysqlContratoRepository);
+const getAllModifiedContratoByContratoIdUseCase = new GetAllModifiedContratoByContratoIdUseCase(mysqlContratoRepository);
 const getDeletedContratoByIdUseCase = new GetDeletedContratoByIdUseCase(mysqlContratoRepository);
 const getDomainDeletedContratoByIdUseCase = new GetDomainDeletedContratoByIdUseCase(mysqlContratoRepository);
 const getDomainModifiedContratoByIdUseCase = new GetDomainModifiedContratoByIdUseCase(mysqlContratoRepository);
@@ -81,6 +84,7 @@ export const updateContratoController = new UpdateContratoController(updateContr
 export const deleteContratoController = new DeleteContratoController(deleteContratoUseCase);
 export const getAllDeletedContratoController = new GetAllDeletedContratoController(getAllDeletedContratoUseCase);
 export const getAllModifiedContratoController = new GetAllModifiedContratoController(getAllModifiedContratoUseCase);
+export const getAllModifiedContratoByContratoIdController = new GetAllModifiedContratoByContratoIdController(getAllModifiedContratoByContratoIdUseCase);
 export const getDeletedContratoByIdController = new GetDeletedContratoByIdController(getDeletedContratoByIdUseCase);
 export const getDomainDeletedContratoByIdController = new GetDomainDeletedContratoByIdController(getDomainDeletedContratoByIdUseCase);
 export const getDomainModifiedContratoByIdController = new GetDomainModifiedContratoByIdController(getDomainModifiedContratoByIdUseCase);

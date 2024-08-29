@@ -99,10 +99,11 @@ export class MysqlServicioRepository implements ServicioRepository {
         }
     }
 
-    async getAllServicio(): Promise<ServicioGetDto[] | null> {
+    async getAllServicio(estatus: number): Promise<ServicioGetDto[] | null> {
         try {
-            const queryStr: string = 'CALL getAllServicioDetallado()';
-            const [result]: any = await query(queryStr, []);
+            const queryStr: string = 'CALL getAllServicioDetallado(?)';
+            const values: any[] = [estatus !== 0 ? estatus : null];
+            const [result]: any = await query(queryStr, values);
 
             if (result[0].length === 0) {
                 return null;

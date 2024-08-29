@@ -20,7 +20,7 @@ export class GetAllTipoInstalacionController {
                 tipoInstalacion: tipoInstalacion
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(500).json({
                 msg: 'Tipos de instalación no encontrados',
                 error: error.message
             });

@@ -20,7 +20,7 @@ export class GetAllModifiedContratoController {
                 contratos: allModifiedContrato
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(500).json({
                 msg: 'Contratos no encontrados',
                 error: error.message
             });

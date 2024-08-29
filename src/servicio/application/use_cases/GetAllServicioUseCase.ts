@@ -4,9 +4,9 @@ import { ServicioRepository } from "../../domain/ServicioRepository";
 export class GetAllServicioUseCase {
     constructor(private servicioRepository: ServicioRepository) {}
 
-    async run(): Promise<ServicioGetDto[] | null> {
+    async run(estatus: number): Promise<ServicioGetDto[] | null> {
         try {
-            return await this.servicioRepository.getAllServicio();
+            return await this.servicioRepository.getAllServicio(estatus);
         } catch (error: any) {
             throw new Error(error.message);
         }
