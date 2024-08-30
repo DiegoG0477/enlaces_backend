@@ -15,8 +15,23 @@ export class EnlaceUpdateDto extends Enlace {
         createdBy: number,
         tipoPersonaId: number,
         direccionId: number,
+        dependenciaId: number,
         id?: string,
     ){
-        super(nombre, apellidoP, apellidoM, correo, telefono, estatus, adscripcionId, cargoId, createdBy, tipoPersonaId, direccionId, id);
+        super(
+            nombre,
+            apellidoP,
+            apellidoM,
+            correo,
+            telefono,
+            estatus,
+            adscripcionId,
+            cargoId,
+            createdBy,
+            tipoPersonaId,
+            direccionId,
+            dependenciaId,
+            id
+        )
     }
 }
