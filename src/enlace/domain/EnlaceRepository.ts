@@ -4,6 +4,7 @@ import { EnlaceCompletoDto } from "./DTOs/EnlaceCompletoDto";
 import { EnlaceGetDeletedDto } from "./DTOs/EnlaceGetDeletedDto";
 import { EnlaceGetModifiedDto } from "./DTOs/EnlaceGetModifiedDto";
 import { EnlaceCreateDto } from "./DTOs/EnlaceCreateDto";
+import { EnlaceTableDto } from "./DTOs/EnlaceTableDto";
 
 export interface EnlaceRepository {
     addEnlace(Enlace: Enlace): Promise<EnlaceCreateDto|null>;
@@ -20,7 +21,10 @@ export interface EnlaceRepository {
     getDomainDeletedEnlaceById(enlaceId: string): Promise<Enlace | null>;
     getAllModifiedEnlace(): Promise<EnlaceGetModifiedDto[] | null>;
     getModifiedEnlaceById(enlaceId: string): Promise<EnlaceGetModifiedDto | null>;
-    getDomainModifiedEnlaceById(enlaceId: string): Promise<Enlace | null>;
+    getDomainModifiedEnlaceById(enlaceId: string): Promise<EnlaceTableDto | null>;
     restoreEnlace(enlaceId: string): Promise<boolean>;
-    restoreModifiedEnlace(modifiedId: string): Promise<boolean>;
+    restoreModifiedEnlace(modifiedId: string, backup: EnlaceTableDto): Promise<boolean>;
+    getBackupEnlaceById(enlaceId: string): Promise<EnlaceTableDto | null>;
+    backupEnlace(enlace: EnlaceTableDto, backupDate: Date): Promise<boolean>;
+    getAllModifiedEnlaceByEnlaceId(enlaceId: string): Promise<EnlaceGetModifiedDto[] | null>;
 }

@@ -42,7 +42,7 @@ export class UpdateEnlaceController {
                 enlace: enlace
             });
         } catch (error: any) {
-            res.status(404).json({
+            res.status(400).json({
                 msg: 'Enlace no actualizado',
                 error: error.message
             });

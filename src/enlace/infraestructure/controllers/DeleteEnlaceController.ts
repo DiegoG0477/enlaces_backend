@@ -9,7 +9,8 @@ export class DeleteEnlaceController {
 
         try {
             const deletedAt = new Date();
-            const userId = (req as any).user.id;
+            // const userId = (req as any).user.id;
+            const userId = '7';
             const deleted = await this.useCase.run(enlaceId, userId, deletedAt);
 
             if (!deleted) {

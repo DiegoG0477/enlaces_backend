@@ -15,7 +15,8 @@ import {
     getDeletedEnlaceByIdController,
     getModifiedEnlaceByIdController,
     restoreEnlaceController,
-    restoreModifiedEnlaceController
+    restoreModifiedEnlaceController,
+    getAllModifiedEnlaceByEnlaceIdController
 } from './dependencies';
 
 const enlaceRouter = express.Router();
@@ -31,10 +32,11 @@ enlaceRouter.delete('/:enlaceId', (req, res) => deleteEnlaceController.run(req, 
 enlaceRouter.get('/deleted/detallados', (req, res) => getAllDeletedEnlaceController.run(req, res));
 enlaceRouter.get('/deleted/:enlaceId', (req, res) => getDomainDeletedEnlaceByIdController.run(req, res));
 enlaceRouter.get('/deleted/detallados/:enlaceId', (req, res) => getDeletedEnlaceByIdController.run(req, res));
-enlaceRouter.get('/modified/detalados', (req, res) => getAllModifiedEnlaceController.run(req, res));
+enlaceRouter.get('/modified/detallados', (req, res) => getAllModifiedEnlaceController.run(req, res));
 enlaceRouter.get('/modified/:enlaceId', (req, res) => getDomainModifiedEnlaceByIdController.run(req, res));
 enlaceRouter.get('/modified/detallados/:enlaceId', (req, res) => getModifiedEnlaceByIdController.run(req, res));
-enlaceRouter.patch('/restore/:enlaceId', (req, res) => restoreEnlaceController.run(req, res));
-enlaceRouter.patch('/restore-modified/:enlaceId', (req, res) => restoreModifiedEnlaceController.run(req, res));
+enlaceRouter.patch('/restore/deleted', (req, res) => restoreEnlaceController.run(req, res));
+enlaceRouter.patch('/restore/modified', (req, res) => restoreModifiedEnlaceController.run(req, res));
+enlaceRouter.get('/modified/detallados/enlaces/:enlaceId', (req, res) => getAllModifiedEnlaceByEnlaceIdController.run(req, res));
 
 export { enlaceRouter };

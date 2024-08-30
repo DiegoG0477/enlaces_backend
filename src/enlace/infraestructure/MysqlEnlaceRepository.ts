@@ -7,6 +7,7 @@ import { EnlaceCompletoDto } from "../domain/DTOs/EnlaceCompletoDto";
 import { EnlaceCreateDto } from "../domain/DTOs/EnlaceCreateDto";
 import { EnlaceGetDeletedDto } from "../domain/DTOs/EnlaceGetDeletedDto";
 import { EnlaceGetModifiedDto } from "../domain/DTOs/EnlaceGetModifiedDto";
+import { EnlaceTableDto } from "../domain/DTOs/EnlaceTableDto";
 
 const signale = new Signale({scope: 'MysqlEnlaceRepository'});
 
@@ -500,9 +501,9 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
         }
     }
 
-    async getDomainModifiedEnlaceById(enlaceId: string): Promise<Enlace | null> {
+    async getDomainModifiedEnlaceById(enlaceId: string): Promise<EnlaceTableDto | null> {
         try {
-            const queryStr: string = 'CALL getDomainModifiedEnlaceById(?)';
+            const queryStr: string = 'CALL getModifiedEnlaceById(?)';
             const values: any[] = [enlaceId];
 
             const [result]: any = await query(queryStr, values);
@@ -513,19 +514,25 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const enlace = result[0][0];
 
-            const modifiedEnlace: Enlace = new Enlace(
+            const modifiedEnlace: EnlaceTableDto = new EnlaceTableDto(
+                enlace.deletedAt,
+                enlace.updatedAt,
+                enlace.deletedBy,
+                enlace.updatedBy,
                 enlace.nombre,
                 enlace.apellidoP,
                 enlace.apellidoM,
                 enlace.correo,
                 enlace.telefono,
                 enlace.estatus,
-                enlace.adscripcion_id,
-                enlace.cargo_id,
+                enlace.id_adscripcion,
+                enlace.id_cargo,
                 enlace.createdBy,
-                enlace.tipoPersona_id,
-                enlace.direccion_id,
-                enlace.idPersona
+                enlace.id_tipo_persona,
+                enlace.id_direccion,
+                enlace.id_dependencia,
+                enlace.id_persona,
+                enlace.createdAt
             );
 
             return modifiedEnlace;
@@ -550,15 +557,146 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
         }
     }
 
-    async restoreModifiedEnlace(modifiedId: string): Promise<boolean> {
+    async restoreModifiedEnlace(modifiedId: string, backup: EnlaceTableDto): Promise<boolean> {
         try {
-            const queryStr: string = 'CALL restoreModifiedEnlace(?)';
-            const values: any[] = [modifiedId];
+            const queryStr: string = 'CALL restoreModifiedEnlace(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+
+            const values: any = [
+                modifiedId,
+                backup.getId(),
+                backup.createdAt,
+                backup.nombre,
+                backup.apellidoP,
+                backup.apellidoM,
+                backup.correo,
+                backup.telefono,
+                backup.estatus,
+                backup.adscripcionId,
+                backup.cargoId,
+                backup.createdBy,
+                backup.tipoPersonaId,
+                backup.direccionId,
+                backup.dependenciaId,
+                backup.deletedAt,
+                backup.updatedAt,
+                backup.deletedBy,
+                backup.updatedBy
+            ];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result[0][0].affectedRows > 0;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getBackupEnlaceById(enlaceId: string): Promise<EnlaceTableDto | null> {
+        try{
+            const queryStr: string = 'CALL getEnlaceById(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaceSql = result[0][0];
+
+            const enlaceBackup: EnlaceTableDto = new EnlaceTableDto(
+                enlaceSql.deletedAt,
+                enlaceSql.updatedAt,
+                enlaceSql.deletedBy,
+                enlaceSql.updatedBy,
+                enlaceSql.nombre,
+                enlaceSql.apellidoP,
+                enlaceSql.apellidoM,
+                enlaceSql.correo,
+                enlaceSql.telefono,
+                enlaceSql.estatus,
+                enlaceSql.adscripcion_id,
+                enlaceSql.cargo_id,
+                enlaceSql.createdBy,
+                enlaceSql.tipoPersona_id,
+                enlaceSql.direccion_id,
+                enlaceSql.dependencia_id,
+                enlaceSql.idPersona,
+                enlaceSql.createdAt
+            );
+
+            return enlaceBackup;
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async backupEnlace(enlace: EnlaceTableDto, backupDate: Date): Promise<boolean> {
+        try {
+            const queryStr: string = 'CALL backupEnlace(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+            const values: any[] = [
+                enlace.getId(),
+                enlace.createdAt,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.adscripcionId,
+                enlace.cargoId,
+                enlace.createdBy,
+                enlace.tipoPersonaId,
+                enlace.direccionId,
+                enlace.dependenciaId,
+                enlace.deletedAt,
+                enlace.updatedAt,
+                enlace.deletedBy,
+                enlace.updatedBy,
+                backupDate
+            ];
 
             const [result]: any = await query(queryStr, values);
 
             return result.affectedRows > 0;
-            
+
+        } catch (error: any) {
+            signale.error(error);
+            throw error;
+        }
+    }
+
+    async getAllModifiedEnlaceByEnlaceId(enlaceId: string): Promise<EnlaceGetModifiedDto[] | null> {
+        try{
+            const queryStr: string = 'CALL getAllModifiedEnlaceDetalladoByEnlaceId(?)';
+            const values: any[] = [enlaceId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const enlaces: EnlaceGetModifiedDto[] = result[0].map((enlace: any) => new EnlaceGetModifiedDto(
+                enlace.updatedAt,
+                enlace.updatedBy,
+                enlace.createdBy,
+                enlace.id,
+                enlace.nombre,
+                enlace.apellidoP,
+                enlace.apellidoM,
+                enlace.correo,
+                enlace.telefono,
+                enlace.estatus,
+                enlace.dependencia,
+                enlace.cargo,
+                enlace.direccion,
+                enlace.adscripcion
+            ));
+
+            return enlaces;
         } catch (error: any) {
             signale.error(error);
             throw error;

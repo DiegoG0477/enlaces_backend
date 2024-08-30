@@ -14,6 +14,7 @@ import { GetDomainModifiedEnlaceByIdUseCase } from "../application/GetDomainModi
 import { GetModifiedEnlaceByIdUseCase } from "../application/GetModifiedEnlaceByIdUseCase";
 import { RestoreEnlaceUseCase } from "../application/RestoreEnlaceUseCase";
 import { RestoreModifiedEnlaceUseCase } from "../application/RestoreModifiedEnlaceUseCase";
+import { GetAllModifiedEnlaceByEnlaceId } from "../application/GetAllModifiedEnlaceByEnlaceIdUseCase";
 
 import { AddEnlaceController } from "./controllers/AddEnlaceController";
 import { GetEnlaceByIdController } from "./controllers/GetEnlaceByIdController";
@@ -31,6 +32,7 @@ import { GetDomainModifiedEnlaceByIdController } from "./controllers/GetDomainMo
 import { GetModifiedEnlaceByIdController } from "./controllers/GetModifiedEnlaceByIdController";
 import { RestoreEnlaceController } from "./controllers/RestoreEnlaceController";
 import { RestoreModifiedEnlaceController } from "./controllers/RestoreModifiedEnlaceController";
+import { GetAllModifiedEnlaceByEnlaceIdController } from "./controllers/GetAllModifiedEnlaceByEnlaceIdController";
 
 import { MysqlEnlaceRepository } from "./MysqlEnlaceRepository";
 
@@ -52,6 +54,7 @@ const getDomainModifiedEnlaceByIdUseCase = new GetDomainModifiedEnlaceByIdUseCas
 const getModifiedEnlaceByIdUseCase = new GetModifiedEnlaceByIdUseCase(mysqlEnlaceRepository);
 const restoreEnlaceUseCase = new RestoreEnlaceUseCase(mysqlEnlaceRepository);
 const restoreModifiedEnlaceUseCase = new RestoreModifiedEnlaceUseCase(mysqlEnlaceRepository);
+const getAllModifiedEnlaceByEnlaceId = new GetAllModifiedEnlaceByEnlaceId(mysqlEnlaceRepository);
 
 
 export const addEnlaceController = new AddEnlaceController(addEnlaceUseCase);
@@ -70,3 +73,4 @@ export const getDomainModifiedEnlaceByIdController = new GetDomainModifiedEnlace
 export const getModifiedEnlaceByIdController = new GetModifiedEnlaceByIdController(getModifiedEnlaceByIdUseCase);
 export const restoreEnlaceController = new RestoreEnlaceController(restoreEnlaceUseCase);
 export const restoreModifiedEnlaceController = new RestoreModifiedEnlaceController(restoreModifiedEnlaceUseCase);
+export const getAllModifiedEnlaceByEnlaceIdController = new GetAllModifiedEnlaceByEnlaceIdController(getAllModifiedEnlaceByEnlaceId);
