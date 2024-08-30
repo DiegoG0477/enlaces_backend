@@ -1,9 +1,10 @@
-import { Servicio } from "../entities/Servicio";
+import { ServicioGetDto } from "./ServicioGetDto";
 
-export class ServicioUpdateDto extends Servicio {
+export class ServicioGetModifiedDto extends ServicioGetDto{
     constructor(
         readonly updatedAt: Date,
         readonly updatedBy: number,
+        id: number,
         folio: string,
         nombreSolicitante: string,
         nombreReceptor: string,
@@ -18,16 +19,18 @@ export class ServicioUpdateDto extends Servicio {
         observaciones: string,
         tipoEnvio: string,
         estatus: number,
-        tipoServicioId: number,
+        tipoServicio: string,
+        codigoServicio: string,
         contratoId: number,
-        tipoActividadId: number,
-        estadoServicioId: number,
-        direccionId: number,
-        cargoId: number,
+        tipoActividad: string,
+        estadoServicio: string,
+        direccion: string,
+        dependencia: string,
+        cargo: string,
         createdBy: number,
-        id?: string,
     ){
         super(
+            id,
             folio,
             nombreSolicitante,
             nombreReceptor,
@@ -42,14 +45,15 @@ export class ServicioUpdateDto extends Servicio {
             observaciones,
             tipoEnvio,
             estatus,
-            tipoServicioId,
+            tipoServicio,
+            codigoServicio,
             contratoId,
-            tipoActividadId,
-            estadoServicioId,
-            direccionId,
-            cargoId,
-            createdBy,
-            id
-        );
+            tipoActividad,
+            estadoServicio,
+            direccion,
+            dependencia,
+            cargo,
+            createdBy
+        )
     }
 }

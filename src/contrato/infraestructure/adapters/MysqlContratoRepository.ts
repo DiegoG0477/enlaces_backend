@@ -28,8 +28,6 @@ export class MysqlContratoRepository implements ContratoRepository {
                 contrato.tipoContratoId,
                 contrato.createdAt
             ];
-
-            console.log(values);
     
             const [result]: any = await query(queryStr, values);
 

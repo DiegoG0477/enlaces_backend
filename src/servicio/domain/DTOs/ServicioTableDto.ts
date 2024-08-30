@@ -1,8 +1,9 @@
 import { Servicio } from "../entities/Servicio";
 
-export class ServicioUpdateDto extends Servicio {
+export class ServicioTableDto extends Servicio {
     constructor(
         readonly updatedAt: Date,
+        readonly createdAt: Date,
         readonly updatedBy: number,
         folio: string,
         nombreSolicitante: string,

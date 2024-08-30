@@ -4,6 +4,8 @@ import { GetAllServicioUseCase } from "../application/use_cases/GetAllServicioUs
 import { GetDomainServicioByIdUseCase } from "../application/use_cases/GetDomainServicioByIdUseCase";
 import { GetServicioByIdUseCase } from "../application/use_cases/GetServicioByIdUseCase";
 import { UpdateServicioUseCase } from "../application/use_cases/UpdateServicioUseCase";
+import { GetAllModifiedServicioByServicioIdUseCase } from "../application/use_cases/GetAllModifiedServicioByServicioIdUseCase";
+import { RestoreModifiedServicioUseCase } from "../application/use_cases/RestoreModifiedServicioUseCase";
 
 import { GetAllTipoActividadUseCase } from "../application/use_cases/GetAllTipoActividadUseCase";
 import { GetAllTipoServicioUseCase } from "../application/use_cases/GetAllTIpoServicioUseCase";
@@ -15,6 +17,8 @@ import { GetAllServicioController } from "./controllers/GetAllServicioController
 import { GetDomainServicioByIdController } from "./controllers/GetDomainServicioByIdController";
 import { GetServicioByIdController } from "./controllers/GetServicioByIdController";
 import { UpdateServicioController } from "./controllers/UpdateServicioController";
+import { GetAllModifiedServicioByServicioIdController } from "./controllers/GetAllModifiedServicioByServicioIdController";
+import { RestoreModifiedServicioController } from "./controllers/RestoreModifiedServicioController";
 
 import { GetAllTipoActividadController } from "./controllers/GetAllTipoActividadController";
 import { GetAllTipoServicioController } from "./controllers/GetAllTipoServicioController";
@@ -34,6 +38,8 @@ const getAllServicioUseCase = new GetAllServicioUseCase(mysqlServicioRepository)
 const getDomainServicioByIdUseCase = new GetDomainServicioByIdUseCase(mysqlServicioRepository);
 const getServicioByIdUseCase = new GetServicioByIdUseCase(mysqlServicioRepository);
 const updateServicioUseCase = new UpdateServicioUseCase(mysqlServicioRepository);
+const getAllModifiedServicioByServicioIdUseCase = new GetAllModifiedServicioByServicioIdUseCase(mysqlServicioRepository);
+const restoreModifiedServicioUseCase = new RestoreModifiedServicioUseCase(mysqlServicioRepository);
 
 const getAllTipoActividadUseCase = new GetAllTipoActividadUseCase(mysqlServicioRepository);
 const getAllTipoServicioUseCase = new GetAllTipoServicioUseCase(mysqlServicioRepository);
@@ -45,6 +51,8 @@ export const getAllServicioController = new GetAllServicioController(getAllServi
 export const getDomainServicioByIdController = new GetDomainServicioByIdController(getDomainServicioByIdUseCase);
 export const getServicioByIdController = new GetServicioByIdController(getServicioByIdUseCase);
 export const updateServicioController = new UpdateServicioController(updateServicioUseCase);
+export const getAllModifiedServicioByServicioIdController = new GetAllModifiedServicioByServicioIdController(getAllModifiedServicioByServicioIdUseCase);
+export const restoreModifiedServicioController = new RestoreModifiedServicioController(restoreModifiedServicioUseCase);
 
 export const getAllTipoActividadController = new GetAllTipoActividadController(getAllTipoActividadUseCase);
 export const getAllTipoServicioController = new GetAllTipoServicioController(getAllTipoServicioUseCase);

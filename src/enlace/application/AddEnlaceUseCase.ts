@@ -5,6 +5,11 @@ export class AddEnlaceUseCase {
     constructor(private repository: EnlaceRepository) {}
 
     async run(Enlace: EnlaceCreateDto): Promise<EnlaceCreateDto|null> {
+        // Desde el procedimiento almacenado de getEnlaceByDependenciaId se aplica el
+        // filtro para que solo se obtenga un enlace ACTIVO, es decir, NO ELIMINADO por dependenciaId
+        // pues puede haber varios enlaces por dependencia, pero solo uno activo
+        // el resto puede ser solo parte del historial y estar marcados como eliminados
+        // por lo que no se deben considerar en la condicion de la creación de un nuevo enlace
         const existence = await this.repository.getEnlaceByDependenciaId(Enlace.dependenciaId);
 
         if (existence) {

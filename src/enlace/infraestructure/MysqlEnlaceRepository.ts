@@ -33,11 +33,13 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if(result.affectedRows === 0){
+            console.log(result);
+
+            if(result[0][0].affectedRows === 0){
                 return null;
             }
 
-            enlace.setId(result.insertId);
+            enlace.setId(result[1][0].id);
 
             return enlace;
         } catch (error: any) {
@@ -315,7 +317,7 @@ export class MysqlEnlaceRepository implements EnlaceRepository {
 
             const [result]: any = await query(queryStr, values);
 
-            if(result.affectedRows === 0){
+            if(result[0][0].affectedRows === 0){
                 return false;
             }
 

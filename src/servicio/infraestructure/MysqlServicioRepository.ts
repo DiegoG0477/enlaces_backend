@@ -10,6 +10,8 @@ import { IctiTipos } from "../../shared/domain/interfaces/IctiTipos";
 import { TipoServicio } from "../domain/entities/TipoServicio";
 import { TipoActividad } from "../domain/entities/TipoActividad";
 import { EstadoServicio } from "../domain/entities/EstadoServicio";
+import { ServicioTableDto } from "../domain/DTOs/ServicioTableDto";
+import { ServicioGetModifiedDto } from "../domain/DTOs/ServicioGetModifiedDto";
 
 const logger: Signale = new Signale({ "scope": "MysqlServicioRepository" });
 
@@ -28,7 +30,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicio.horaInicio,
                 servicio.horaTermino,
                 servicio.descripcionFalla,
-                servicio.descripccionActividad,
+                servicio.descripcionActividad,
                 servicio.nivel,
                 servicio.fotos,
                 servicio.observaciones,
@@ -76,7 +78,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicio.hora_inicio,
                 servicio.hora_termino,
                 servicio.descripcion_falla,
-                servicio.descripccion_actividad,
+                servicio.descripcion_actividad,
                 servicio.nivel,
                 servicio.fotos,
                 servicio.observaciones,
@@ -119,7 +121,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicio.horaInicio,
                 servicio.horaTermino,
                 servicio.descripcionFalla,
-                servicio.descripccionActividad,
+                servicio.descripcionActividad,
                 servicio.nivel,
                 // fotos es el boolean de si el servicio incluye fotos o no
                 // se recibe 0 o 1
@@ -168,7 +170,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicioSql.hora_inicio,
                 servicioSql.hora_termino,
                 servicioSql.descripcion_falla,
-                servicioSql.descripccion_actividad,
+                servicioSql.descripcion_actividad,
                 servicioSql.nivel,
                 servicioSql.fotos,
                 servicioSql.observaciones,
@@ -214,7 +216,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicioSql.horaInicio,
                 servicioSql.horaTermino,
                 servicioSql.descripcionFalla,
-                servicioSql.descripccionActividad,
+                servicioSql.descripcionActividad,
                 servicioSql.nivel,
                 servicioSql.fotos,
                 servicioSql.observaciones,
@@ -251,7 +253,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 updateData.horaInicio ?? null,
                 updateData.horaTermino ?? null,
                 updateData.descripcionFalla ?? null,
-                updateData.descripccionActividad ?? null,
+                updateData.descripcionActividad ?? null,
                 updateData.nivel ?? null,
                 updateData.fotos ?? null,
                 updateData.observaciones ?? null,
@@ -285,7 +287,7 @@ export class MysqlServicioRepository implements ServicioRepository {
                 servicioSql.hora_inicio,
                 servicioSql.hora_termino,
                 servicioSql.descripcion_falla,
-                servicioSql.descripccion_actividad,
+                servicioSql.descripcion_actividad,
                 servicioSql.nivel,
                 servicioSql.fotos,
                 servicioSql.observaciones,
@@ -412,6 +414,250 @@ export class MysqlServicioRepository implements ServicioRepository {
             ));
 
             return tiposServicio;
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getBackupServicioById(servicioId: string): Promise<ServicioTableDto | null> {
+        try{
+            const queryStr: string = 'CALL getDomainServicioById(?)';
+            const values: any[] = [servicioId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const servicioSql = result[0][0];
+
+            const backupServicio: ServicioTableDto = new ServicioTableDto(
+                servicioSql.updatedAt,
+                servicioSql.createdAt,
+                servicioSql.updatedBy,
+                servicioSql.folio,
+                servicioSql.nombre_solicitante,
+                servicioSql.nombre_receptor,
+                servicioSql.fecha_inicio,
+                servicioSql.fecha_termino,
+                servicioSql.hora_inicio,
+                servicioSql.hora_termino,
+                servicioSql.descripcion_falla,
+                servicioSql.descripcion_actividad,
+                servicioSql.nivel,
+                servicioSql.fotos,
+                servicioSql.observaciones,
+                servicioSql.tipo_envio,
+                servicioSql.estatus,
+                servicioSql.id_tipo_servicio,
+                servicioSql.id_contrato,
+                servicioSql.id_tipo_actividad,
+                servicioSql.id_estado_servicio,
+                servicioSql.id_direccion,
+                servicioSql.id_cargo,
+                servicioSql.createdBy,
+                servicioSql.id
+            );
+
+            return backupServicio;
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async backupServicio(servicio: ServicioTableDto, backupDate: Date): Promise<boolean> {
+        try{
+            const queryStr: string = 'CALL backupServicio(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+
+            const values: any[] = [
+                servicio.getId(),
+                servicio.updatedAt,
+                servicio.createdAt,
+                servicio.updatedBy,
+                servicio.getFolio(),
+                servicio.nombreSolicitante,
+                servicio.nombreReceptor,
+                servicio.fechaInicio,
+                servicio.fechaTermino,
+                servicio.horaInicio,
+                servicio.horaTermino,
+                servicio.descripcionFalla,
+                servicio.descripcionActividad,
+                servicio.nivel,
+                servicio.fotos,
+                servicio.observaciones,
+                servicio.tipoEnvio,
+                servicio.estatus,
+                servicio.tipoServicioId,
+                servicio.contratoId,
+                servicio.tipoActividadId,
+                servicio.estadoServicioId,
+                servicio.direccionId,
+                servicio.cargoId,
+                servicio.createdBy,
+                backupDate
+            ];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+        }catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async restoreServicio(servicioId: string): Promise<boolean> {
+        try{
+            const queryStr: string = 'CALL restoreServicio(?)';
+            const values: any[] = [servicioId];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result.affectedRows > 0;
+            
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+    
+    async restoreModifiedServicio(modifiedId: string, backup: ServicioTableDto): Promise<boolean> {
+        try{
+            const queryStr: string = 'CALL restoreModifiedServicio(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+
+            const values = [
+                modifiedId,
+                backup.updatedAt,
+                backup.createdAt,
+                backup.updatedBy,
+                backup.getFolio(),
+                backup.nombreSolicitante,
+                backup.nombreReceptor,
+                backup.fechaInicio,
+                backup.fechaTermino,
+                backup.horaInicio,
+                backup.horaTermino,
+                backup.descripcionFalla,
+                backup.descripcionActividad,
+                backup.nivel,
+                backup.fotos,
+                backup.observaciones,
+                backup.tipoEnvio,
+                backup.estatus,
+                backup.tipoServicioId,
+                backup.contratoId,
+                backup.tipoActividadId,
+                backup.estadoServicioId,
+                backup.direccionId,
+                backup.cargoId,
+                backup.createdBy,
+                backup.getId()
+            ];
+
+            const [result]: any = await query(queryStr, values);
+
+            return result[0][0].affectedRows > 0;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getAllModifiedServicioByServicioId(servicioId: string): Promise<ServicioGetModifiedDto[] | null> {
+        try{
+            const queryStr: string = 'CALL getAllModifiedServicioByServicioId(?)';
+            const values: any[] = [servicioId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const modifiedServicios: ServicioGetModifiedDto[] = result[0].map((servicio: any) => new ServicioGetModifiedDto(
+                servicio.updatedAt,
+                servicio.updatedBy,
+                servicio.id,
+                servicio.folio,
+                servicio.nombreSolicitante,
+                servicio.nombreReceptor,
+                servicio.fechaInicio,
+                servicio.fechaTermino,
+                servicio.horaInicio,
+                servicio.horaTermino,
+                servicio.descripcionFalla,
+                servicio.descripcionActividad,
+                servicio.nivel,
+                servicio.fotos,
+                servicio.observaciones,
+                servicio.tipoEnvio,
+                servicio.estatus,
+                servicio.tipoServicio,
+                servicio.codigoServicio,
+                servicio.contratoId,
+                servicio.tipoActividad,
+                servicio.estadoServicio,
+                servicio.direccion,
+                servicio.dependencia,
+                servicio.cargo,
+                servicio.createdBy
+            ));
+
+            return modifiedServicios;
+
+        } catch (error: any) {
+            logger.error(error);
+            throw error;
+        }
+    }
+
+    async getDomainModifiedServicioById(servicioId: string): Promise<ServicioTableDto | null> {
+        try{
+            const queryStr: string = 'CALL getDomainModifiedServicioById(?)';
+            const values: any[] = [servicioId];
+
+            const [result]: any = await query(queryStr, values);
+
+            if(result[0].length === 0){
+                return null;
+            }
+
+            const servicioSql = result[0][0];
+
+            const modifiedServicio: ServicioTableDto = new ServicioTableDto(
+                servicioSql.updatedAt,
+                servicioSql.createdAt,
+                servicioSql.updatedBy,
+                servicioSql.folio,
+                servicioSql.nombre_solicitante,
+                servicioSql.nombre_receptor,
+                servicioSql.fecha_inicio,
+                servicioSql.fecha_termino,
+                servicioSql.hora_inicio,
+                servicioSql.hora_termino,
+                servicioSql.descripcion_falla,
+                servicioSql.descripcion_actividad,
+                servicioSql.nivel,
+                servicioSql.fotos,
+                servicioSql.observaciones,
+                servicioSql.tipo_envio,
+                servicioSql.estatus,
+                servicioSql.id_tipo_servicio,
+                servicioSql.id_contrato,
+                servicioSql.id_tipo_actividad,
+                servicioSql.id_estado_servicio,
+                servicioSql.id_direccion,
+                servicioSql.id_cargo,
+                servicioSql.createdBy,
+                servicioSql.id_servicio
+            );
+
+            return modifiedServicio;
         } catch (error: any) {
             logger.error(error);
             throw error;

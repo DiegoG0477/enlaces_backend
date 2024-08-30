@@ -3,6 +3,8 @@ import { Servicio } from "./entities/Servicio";
 import { FolioData } from "./entities/FolioData";
 import { IctiTipos } from "../../shared/domain/interfaces/IctiTipos";
 import { TipoServicio } from "./entities/TipoServicio";
+import { ServicioTableDto } from "./DTOs/ServicioTableDto";
+import { ServicioGetModifiedDto } from "./DTOs/ServicioGetModifiedDto";
 
 export interface ServicioRepository {
     addServicio(servicio: Servicio): Promise<Servicio|null>;
@@ -17,4 +19,10 @@ export interface ServicioRepository {
     getAllTipoServicio(): Promise<TipoServicio[] | null>;
     getAllTipoActividad(): Promise<IctiTipos[] | null>;
     getAllEstadoServicio(): Promise<IctiTipos[] | null>;
+    getDomainModifiedServicioById(servicioId: string): Promise<ServicioTableDto | null>;
+    restoreServicio(servicioId: string): Promise<boolean>;
+    restoreModifiedServicio(modifiedId: string, backup: ServicioTableDto): Promise<boolean>;
+    getBackupServicioById(servicioId: string): Promise<ServicioTableDto | null>;
+    backupServicio(servicio: ServicioTableDto, backupDate: Date): Promise<boolean>;
+    getAllModifiedServicioByServicioId(servicioId: string): Promise<ServicioGetModifiedDto[] | null>;
 }

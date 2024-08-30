@@ -9,7 +9,7 @@ export class ServicioGetDto{
         readonly horaInicio: string,
         readonly horaTermino: string,
         readonly descripcionFalla: string,
-        readonly descripccionActividad: string,
+        readonly descripcionActividad: string,
         readonly nivel: string,
         // fotos es el boolean de si el servicio incluye fotos o no
         readonly fotos: number,

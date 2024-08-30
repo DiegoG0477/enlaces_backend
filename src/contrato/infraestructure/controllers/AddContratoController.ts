@@ -26,8 +26,6 @@ export class AddContratoController {
                 request.id_tipoContrato as number
             );
 
-            console.log(contrato);
-
             const contratoAdded = await this.addContratoUseCase.run(contrato);
 
             if (!contratoAdded) {

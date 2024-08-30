@@ -6,6 +6,8 @@ import {
     getDomainServicioByIdController,
     getServicioByIdController,
     updateServicioController,
+    getAllModifiedServicioByServicioIdController,
+    restoreModifiedServicioController,
     //tipos
     getAllTipoActividadController,
     getAllTipoServicioController,
@@ -20,6 +22,8 @@ servicioRouter.get('/detallados', (req, res) => getAllServicioController.run(req
 servicioRouter.get('/:servicioId', (req, res) => getDomainServicioByIdController.run(req, res));
 servicioRouter.get('/detallados/:servicioId', (req, res) => getServicioByIdController.run(req, res));
 servicioRouter.patch('/:servicioId', (req, res) => updateServicioController.run(req, res));
+servicioRouter.get('/modified/detallados/:servicioId', (req, res) => getAllModifiedServicioByServicioIdController.run(req, res));
+servicioRouter.patch('/restore/modified', (req, res) => restoreModifiedServicioController.run(req, res));
 
 servicioRouter.get('/tipos/actividad', (req, res) => getAllTipoActividadController.run(req, res));
 servicioRouter.get('/tipos/servicio', (req, res) => getAllTipoServicioController.run(req, res));
